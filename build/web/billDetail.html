@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chi tiết hoá đơn</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .bill-info {
+                margin-bottom: 20px;
+                border: 2px solid #ccc;
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            }
+            .bill-info p {
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+            .bill-info p strong {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="menuPlaceholder"></div>
+        <div class="container" style="padding-top: 150px">
+            <h1 class="text-center mb-4">Chi tiết hoá đơn</h1>
+
+            <div id="billDetail" class="bill-info">
+                <!-- Dữ liệu chi tiết hoá đơn sẽ được tạo ra bằng JavaScript -->
+            </div>
+            <div class="text-center mb-4">
+                <button id="backButton" class="btn btn-secondary mr-3">Trở lại</button>
+                <button id="saveButton" class="btn btn-primary" style="display: none;">Lưu</button>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS và jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script>
+            // Sử dụng jQuery để tải menu từ server
+            $(document).ready(function () {
+                // Lấy vai trò của người dùng từ response JSON khi lấy chi tiết hoá đơn
+                fetch('/BaiCoNgoc/getChiTietHoaDon?id=' + idBill)
+                        .then(response => response.json())
+                        .then(data => {
+                            const userRole = data.vaitro;
+                            const menuUrl = userRole === 'user' ? 'menuuser.jsp' : 'menuadmin.jsp';
+
+                            // Tải menu dựa trên vai trò của người dùng
+                            $.get(menuUrl, function (menuData) {
+                                $("#menuPlaceholder").html(menuData);
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Lỗi khi lấy vai trò của người dùng:', error);
+                        });
+            });
+            let idBill; // Biến toàn cục để lưu trữ idBill
+
+            // Hàm lấy chi tiết hoá đơn
+            async function fetchBillDetail() {
+                try {
+                    // Lấy id_bill từ query string
+                    const urlParams = new URLSearchParams(window.location.search);
+                    idBill = urlParams.get('id');
+
+                    // Sử dụng Fetch API để gửi yêu cầu GET đến servlet
+                    const response = await fetch('/BaiCoNgoc/getChiTietHoaDon?id=' + idBill);
+
+                    // Kiểm tra xem yêu cầu có thành công không
+                    if (!response.ok) {
+                        throw new Error('Lỗi khi lấy chi tiết hoá đơn');
+                    }
+
+                    // Chuyển đổi dữ liệu nhận được thành JSON
+                    const billDetail = await response.json();
+
+                    // Kiểm tra vai trò của người dùng
+                    const userRole = billDetail.vaitro;
+
+                    // Hiển thị chi tiết hoá đơn trên trang
+                    renderBillDetail(billDetail, userRole);
+                } catch (error) {
+                    console.error("Lỗi khi lấy dữ liệu:", error);
+                    alert('Lỗi khi lấy dữ liệu từ máy chủ.');
+                }
+            }
+
+            function renderBillDetail(billDetail, userRole) {
+                const billDetailDiv = document.getElementById('billDetail');
+                const html = `
+                    <div class="card">
+                        <div class="card-body">
+                            <p><strong>Mã hoá đơn:</strong> ${billDetail.id_bill}</p>
+                            <p><strong>Nhà cung cấp điện:</strong> ${billDetail.elec_provider}</p>
+                            <p><strong>Họ và tên:</strong> ${billDetail.fullname}</p>
+                            <p><strong>Địa chỉ:</strong> ${billDetail.elecaddress}</p>
+                            <p><strong>Kỳ hoá đơn:</strong> ${billDetail.period}</p>
+                            <p><strong>Thời gian bắt đầu:</strong> ${new Date(billDetail.time_start).toLocaleDateString()}</p>
+                            <p><strong>Thời gian sửa đổi:</strong> ${new Date(billDetail.time_edit).toLocaleDateString()}</p>
+                            <p><strong>Số điện:</strong> ${billDetail.meter_number}</p>
+                            <p><strong>Tiền điện:</strong> ${billDetail.e_bill}</p>
+                            <p><strong>Hạn thanh toán:</strong> ${billDetail.payment_due_date}</p>
+                            <div class="form-group">
+                                <label for="paymentStatus"> <p><strong>Trạng thái thanh toán:</p></label>
+                                <select class="form-control" id="paymentStatus" ${userRole === 'user' ? 'disabled' : ''}>
+                                    <option value="paid" ${billDetail.is_paid ? 'selected' : ''}>Đã thanh toán</option>
+                                    <option value="unpaid" ${!billDetail.is_paid ? 'selected' : ''}>Chưa thanh toán</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                billDetailDiv.innerHTML = html;
+
+                // Nếu người dùng không phải là user, thêm sự kiện click cho nút Lưu
+                if (userRole !== 'user') {
+                    document.getElementById('saveButton').style.display = '';
+                    document.getElementById('saveButton').addEventListener('click', function () {
+                        // Hiển thị thông báo xác nhận
+                        if (confirm('Bạn có chắc chắn muốn lưu trạng thái thanh toán không?')) {
+                            // Lấy giá trị trạng thái thanh toán từ dropdown
+                            const paymentStatus = document.getElementById('paymentStatus').value;
+                            console.log('Trạng thái thanh toán:', paymentStatus);
+
+                            // Gửi yêu cầu POST để lưu trạng thái thanh toán
+                            fetch('/BaiCoNgoc/getChiTietHoaDon', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: 'id=' + encodeURIComponent(idBill) + '&status=' + encodeURIComponent(paymentStatus)
+                            })
+                                    .then(response => {
+                                        // Xử lý phản hồi từ máy chủ (nếu cần)
+                                        console.log(response);
+                                        // Hiển thị thông báo lưu thành công
+                                        alert('Trạng thái thanh toán đã được cập nhật thành công!');
+                                        // Chuyển về trang bill.html
+                                        window.location.href = 'bill.html';
+                                    })
+                                    .catch(error => {
+                                        console.error('Lỗi:', error);
+                                        alert('Có lỗi xảy ra khi gửi yêu cầu lưu trạng thái thanh toán.');
+                                    });
+                        }
+                    });
+                }
+            }
+
+            // Sự kiện click cho nút Trở lại
+            document.getElementById('backButton').addEventListener('click', function () {
+                window.history.back();
+            });
+
+            // Gọi hàm fetchBillDetail khi trang được load
+            fetchBillDetail();
+            // Bắt sự kiện khi người dùng nhấn phím "Enter" trên trang web
+            document.addEventListener('keypress', function (event) {
+                // Kiểm tra xem phím được nhấn là phím "Enter" (mã phím 13)
+                if (event.key === 'Enter') {
+                    // Ngăn chặn hành vi mặc định của phím "Enter" trong form (chẳng hạn nhấn submit)
+                    event.preventDefault();
+
+                    // Trigger sự kiện click cho nút Lưu
+                    document.getElementById('saveButton').click();
+                }
+            });
+
+        </script>
+    </body>
+</html>

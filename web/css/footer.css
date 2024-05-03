@@ -1,0 +1,14 @@
+.footer{
+    width: 100%;
+    background-color:rgba(48, 50, 19, 0.359);
+    padding: 40px;
+    font-size: 17px;
+    background-color:rgb(63, 146, 188);
+    color: rgb(255, 255, 255);
+    float: left;
+}
+.bieutuong:hover{
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    transform: scale(1.1,1.1);
+}

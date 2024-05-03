@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <servlet>
+        <servlet-name>BangGiaDienController</servlet-name>
+        <servlet-class>Control.BangGiaDienController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BangGiaDienController</servlet-name>
+        <url-pattern>/getData</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>TaxController</servlet-name>
+        <servlet-class>Control.TaxController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TaxController</servlet-name>
+        <url-pattern>/getTaxGTGT</url-pattern>
+    </servlet-mapping>
+    
+<!--    <servlet>
+        <servlet-name>CapNhatSoDienController</servlet-name>
+        <servlet-class>Control.CapNhatSoDienController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CapNhatSoDienController</servlet-name>
+        <url-pattern>/CapNhatSoDien</url-pattern>
+    </servlet-mapping>-->
+
+    <session-config>
+        <session-timeout> <!-- Đây là cấu hình thời gian timeout của session -->
+            30 <!-- Giả sử thời gian timeout là 30 phút -->
+        </session-timeout>
+    </session-config>
+
+</web-app>

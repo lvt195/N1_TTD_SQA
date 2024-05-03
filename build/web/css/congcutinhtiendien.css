@@ -1,0 +1,15 @@
+.tieude {
+    text-align: center;  
+}
+
+.congcutinhtiendien{
+    width: 90%;
+    background-color: #f2f2f2;
+    /*border-radius: 10%;*/
+    border: 1px solid black;
+    margin-left: 5%;
+    margin-top: 70px;
+    padding: 15%;
+    float: left;
+}
+

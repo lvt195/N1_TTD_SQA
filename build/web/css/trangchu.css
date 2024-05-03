@@ -1,0 +1,26 @@
+.trangchu{
+    width: 100%;
+    height: auto;
+    float: left;
+    background-color:#fff ;
+}
+.gioithieu{
+    width: 100%;
+}
+
+.block{
+    width: 50%;
+    height: 100%;
+    float: left;
+    
+}
+.anh2{
+    border-radius: 20%;
+    width: 50%;
+    margin: 20%;
+}
+.contentgt{
+    width: 50%;
+    height: 100%;
+    float: left;
+}
