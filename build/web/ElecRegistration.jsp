@@ -19,8 +19,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div class="container mt-5">
-            <h1>Đăng ký mua điện</h1>
+        <jsp:include page="/menuuser.jsp"/>
+        <div class="container" style="padding-top: 100px ">
+            <h1 style="text-align: center">Đăng ký mua điện</h1>
             <form action="ElecRegistration" method="POST">
                 <div class="table-responsive">
                     <table class="table table-bordered">

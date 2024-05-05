@@ -4,6 +4,14 @@
         <servlet-name>BangGiaDienController</servlet-name>
         <servlet-class>Control.BangGiaDienController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageElecRegis</servlet-name>
+        <servlet-class>Control.ManageElecRegis</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateElec</servlet-name>
+        <servlet-class>Control.UpdateElec</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BangGiaDienController</servlet-name>
         <url-pattern>/getData</url-pattern>
@@ -31,5 +39,17 @@
     <servlet-mapping>
         <servlet-name>ChiTietHoaDonController</servlet-name>
         <url-pattern>/getChiTietHoaDon</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ManageElecRegis</servlet-name>
+        <servlet-class>Control.ManageElecRegis</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageElecRegis</servlet-name>
+        <url-pattern>/ManageElecRegis</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateElec</servlet-name>
+        <url-pattern>/UpdateElec</url-pattern>
     </servlet-mapping>
 </web-app>

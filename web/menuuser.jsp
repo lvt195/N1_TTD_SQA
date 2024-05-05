@@ -24,7 +24,7 @@
             <div class="tacvu">
                  Hỗ trợ 24/7: Nhóm 01 Đảm bảo chất lượng phần mềm
             </div>
-            
+         
             <div class="tacvu">
                 <p><%= mes%></p>
                 <form action="${pageContext.request.contextPath}/dangxuatcontroller"> <input type="submit" class="button" value="Đăng xuất"> </form>
@@ -40,7 +40,7 @@
                 <form action="${pageContext.request.contextPath}/trangchucontroller"> <input type="submit" class="button" value="Trang Chủ"> </form>
                 <form action="${pageContext.request.contextPath}/congcutinhtiendien.html"> <input type="submit" class="button" value="Công cụ tính tiền điện"> </form>
                 <form action="${pageContext.request.contextPath}/bill.html"> <input type="submit" class="button" value="Xem hoá đơn"> </form>
-                <form action="${pageContext.request.contextPath}/#"> <input type="submit" class="button" value="Đăng kí mua điện"> </form>
+                <form action="${pageContext.request.contextPath}/ElecRegistration"> <input type="submit" class="button" value="Đăng kí mua điện"> </form>
             </div>
         </div>
         </div>

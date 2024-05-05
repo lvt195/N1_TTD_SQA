@@ -77,7 +77,9 @@
                     } else if (vaitroList.includes("user")) {
                         menu = "menuuser.jsp";
                     }
-
+                    else{
+                        
+                    }
                     let tableContent = '';
 
                     if (parsedData.length === 0) {
@@ -125,7 +127,7 @@
                 } catch (error) {
                     console.error("Error fetching data:", error);
                     // Hiển thị thông báo lỗi cho người dùng
-                    document.getElementById('billTableBody').innerHTML = '<tr><td colspan="7" class="text-center">Lỗi khi lấy dữ liệu từ máy chủ.</td></tr>';
+                    document.getElementById('billTableBody').innerHTML = '<tr><td colspan="7" class="text-center">Lỗi khi lấy dữ liệu từ máy chủ.<br> Vui lòng thử lại sau.</td></tr>';
                 }
 
                 // Lấy nội dung menu từ file JSP
