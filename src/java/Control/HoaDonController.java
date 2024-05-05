@@ -33,7 +33,7 @@ public class HoaDonController extends HttpServlet {
             if ("admin".equals(vaitro)) {
                 cccd = "1"; // Đặt giá trị mặc định cho admin
             } else {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.sendRedirect("dangnhap.jsp");
                 return;
             }
         }

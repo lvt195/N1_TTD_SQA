@@ -16,6 +16,8 @@ import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.sql.SQLException;
+
 //import java.util.Date;
 import java.sql.Date;
 import java.util.List;
@@ -163,7 +165,11 @@ public class ElectricBoardDAO {
     public boolean themElectricBoard(ElectricBoard electr, int sd, int tsd, User admin) {
         String sql = "INSERT INTO electricboard(meter_code,meter_address,period,meter_number,total_electricity,time_start,time_edit,time_update,id_admin,id_elecregistration) VALUES(?,?,?,?,?,?,?,?,?,?)";
         int result = 0;
-        try (Connection con = DBConnect.getConnection()) {
+        Connection con = null;
+        try  {
+            con = DBConnect.getConnection();
+            con.setAutoCommit(false);
+
             Calendar c = Calendar.getInstance();
             int nY = c.get(Calendar.YEAR);
             int nM = c.get(Calendar.MONTH);
@@ -182,12 +188,46 @@ public class ElectricBoardDAO {
 //                        ps.setInt(9,1);
             ps.setInt(10, electr.geteRegistration().getId());
             result = ps.executeUpdate();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            // Lấy id của ElectricBoard mới được thêm vào
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            int electricBoardId = -1;
+            if (generatedKeys.next()) {
+                electricBoardId = generatedKeys.getInt(1);
+            } 
+
+            // Thêm hoá đơn mới vào cơ sở dữ liệu với id_ellectricBoard đã được lấy
+            String billSql = "INSERT INTO bills(id_electricboard, id_elecregistration, id_admin, is_paid) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement billPs = con.prepareStatement(billSql)) {
+                billPs.setInt(1, electricBoardId);
+                billPs.setInt(2, electr.geteRegistration().getId());
+                billPs.setInt(3, admin.getId());
+                billPs.setBoolean(4, false); // Mặc định chưa thanh toán
+                billPs.executeUpdate();
+            }
+
+        con.commit();
+    } catch (Exception e) {
+        if (con != null) {
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-        return result > 0;
+        e.printStackTrace();
+    } finally {
+        if (con != null) {
+            try {
+                con.setAutoCommit(true);
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
+    return result > 0;
+}
 
     public boolean KhoiTaoElectricBoard(elecRegistration e, User admin) {
         String sql = "INSERT INTO electricboard(meter_code,meter_address,period,meter_number,total_electricity,time_start,time_edit,time_update,id_admin,id_elecregistration) VALUES(?,?,?,?,?,?,?,?,?,?)";

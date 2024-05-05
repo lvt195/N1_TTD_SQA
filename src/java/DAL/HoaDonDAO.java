@@ -98,6 +98,44 @@ public class HoaDonDAO {
         return false;
     }
 }
+    
+    public void addBill(Bill bill) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        
+        try {
+            conn = DBConnect.getConnection(); // Lấy kết nối đến cơ sở dữ liệu
+            String sql = "INSERT INTO bills (id_electricboard, id_elecregistration, id_admin, is_paid) VALUES (?, ?, ?, ?)";
+            stmt = conn.prepareStatement(sql);
+            
+            // Thiết lập các tham số cho câu lệnh SQL
+            stmt.setInt(1, bill.getElectricBoard().getId());
+            stmt.setInt(2, bill.getElecRegistration().getId());
+            stmt.setInt(3, bill.getId_admin());
+            stmt.setBoolean(4, bill.isIs_paid());
+
+            
+            // Thực hiện truy vấn SQL
+            int rowsAffected = stmt.executeUpdate();
+            
+            // Kiểm tra xem câu lệnh đã được thực hiện thành công hay không
+            if (rowsAffected == 1) {
+                System.out.println("Hóa đơn đã được thêm vào cơ sở dữ liệu thành công.");
+            } else {
+                System.out.println("Có lỗi xảy ra khi thêm hóa đơn vào cơ sở dữ liệu.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng kết nối và tuyên bố đối tượng
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
 
     private ElectricBoard loadElectricBoard(int id) throws SQLException {
         ElectricBoard electricBoard = null;

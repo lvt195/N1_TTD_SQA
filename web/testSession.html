@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin từ session</title>
+</head>
+<body>
+    <h1>Thông tin từ session</h1>
+    <div id="sessionInfo">
+        <!-- Thông tin từ session sẽ được hiển thị ở đây -->
+    </div>
+
+    <script>
+        // Hàm để hiển thị thông tin từ session
+        function displaySessionInfo() {
+            // Lấy thông tin từ session storage bằng JavaScript
+            const username = sessionStorage.getItem('cccd');
+            // Lấy các thông tin khác từ session nếu cần
+
+            // Hiển thị thông tin trên trang HTML
+            const sessionInfoDiv = document.getElementById('sessionInfo');
+            sessionInfoDiv.innerHTML = `<p>Tên người dùng: ${username}</p>`;
+            // Hiển thị các thông tin khác nếu cần
+        }
+
+        // Gọi hàm displaySessionInfo khi trang được tải
+        window.onload = displaySessionInfo;
+    </script>
+</body>
+</html>

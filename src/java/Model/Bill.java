@@ -148,7 +148,7 @@ public class Bill {
     
     public Bill() {
     }
-
+    
     public Bill(int id_bill, ElectricBoard electricBoard, elecRegistration elecRegistration,User user, int id_admin, boolean is_paid, Date time_pay, Date update_at) {
         this.id_bill = id_bill;
         this.electricBoard = electricBoard;
@@ -158,6 +158,16 @@ public class Bill {
         this.is_paid = is_paid;
         this.time_pay = time_pay;
         this.update_at = update_at;
+    }
+    
+    public Bill(ElectricBoard electricBoard, elecRegistration elecRegistration,User user, int id_admin) {
+        this.electricBoard = electricBoard;
+        this.elecRegistration = elecRegistration;
+        this.user = user;
+        this.id_admin = id_admin;
+        this.is_paid = false;
+//        this.time_pay = time_pay;, Date time_pay, Date update_at
+//        this.update_at = update_at;
     }
 
     public int getId_bill() {
