@@ -31,7 +31,9 @@ public class ElecRegistration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-              request.getRequestDispatcher("ElecRegistration.jsp").forward(request, response);
+        List<district> listDis = new districtDAO().getAll();
+        request.setAttribute("listDis", listDis);
+        request.getRequestDispatcher("ElecRegistration.jsp").forward(request, response);
     }
 
     
@@ -52,9 +54,9 @@ public class ElecRegistration extends HttpServlet {
             String dateOfId = request.getParameter("dateOfId");
             String placeOfId = request.getParameter("placeOfId");
             String phaseNumber = request.getParameter("phaseNumber");
-            String personalDoc = "a";
-            String dits = "b";
-            String status = "wait";
+            String personalDoc = "Thieu";
+            String dits = "Thieu";
+            String status = "Chờ duyệt";
 
             String res = elecRegistration.elecRegistration(fullName, phone, gmail,
                     placeOfResidence, elecAddress, city, district, wards, idCard, dateOfId, placeOfId, phaseNumber, personalDoc, dits, status);

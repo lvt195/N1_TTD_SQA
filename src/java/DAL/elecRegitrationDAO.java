@@ -42,7 +42,7 @@ public class elecRegitrationDAO {
 
     public elecRegistration getElecbyId(int id) {
         try {
-            String query = "SELECT * FROM electricity.elecregistration where idElecRegis=?;";
+            String query = "select * from electricity.elecregistration where id=?;";
             con = new DBConnect().getConnection();
             ps = con.prepareStatement(query);
             ps.setInt(1, id);

@@ -43,15 +43,16 @@ public class UpdateElec extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("id"));
         elecRegitrationDAO dao = new elecRegitrationDAO();
-
+        PrintWriter writer = response.getWriter();
+        writer.println("laays elec");
         elecRegistration item = dao.getElecbyId(id);
 
         List<district> listDis = new districtDAO().getAll();
-
+        writer.println("doGet"+item+id);
         request.setAttribute("item", item);
 
         request.setAttribute("listDis", listDis);
-        request.getRequestDispatcher("Update.jsp").forward(request, response);
+        request.getRequestDispatcher("UpdateElec.jsp").forward(request, response);
     }
 
     @Override

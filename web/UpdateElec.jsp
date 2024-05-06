@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -8,6 +7,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Sửa thông tin đăng ký</title>
+        <!-- Thêm link tới Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     </head>
     <body>
         <% HttpSession sss = request.getSession();
@@ -16,30 +17,32 @@
             // Nếu không có vai trò hoặc vai trò không phải là "admin", chuyển hướng đến trang khác hoặc hiển thị thông báo lỗi
             response.sendRedirect("unauthorized.jsp");
         } else {%> 
-        <form action="UpdateElec" method="POST" autocomplete="off" id="regis">
-            <table border="1" style="width: 100%">
+        <jsp:include page="menuadmin.jsp" />
+        <form action="UpdateElec" method="POST" autocomplete="off" id="regis" class="container" style="padding-top: 120px">
+            <h1 style="text-align: center">Cập nhật thông tin đăng ký mua điện</h1>
+            <table border="1" style="width: 100%;padding-top: 200px" class="table">
                 <tr>
                     <th>Họ tên người yêu cầu *</th>
                     <th>Điện thoại liên hệ *</th>
                     <th>Email liên hệ</th>
                 </tr>
                 <tr>
-                    <td><input type="text" name="fullName" value="${item.fullName}" id="fullName" /></td>
-                    <td><input type="text" name="phone" value="${item.phone}" id="phone" maxlength="10" /></td>
-                    <td><input type="text" name="gmail" value="${item.gmail}" /></td>
+                    <td><input type="text" name="fullName" value="${item.fullName}" id="fullName" class="form-control" /></td>
+                    <td><input type="text" name="phone" value="${item.phone}" id="phone" maxlength="10" class="form-control" /></td>
+                    <td><input type="text" name="gmail" value="${item.gmail}" class="form-control" /></td>
                 </tr>
 
                 <tr>
                     <th>Nơi thường trú</th>
                 </tr>
                 <tr>
-                    <td><input type="text" name="placeOfResidence" value="${item.placeOfResidence}" id="placeOfResidence" /></td>
+                    <td><input type="text" name="placeOfResidence" value="${item.placeOfResidence}" id="placeOfResidence" class="form-control" /></td>
                 </tr>
                 <tr>
                     <th>Địa chỉ dùng điện</th>
                 </tr>
                 <tr>
-                    <td><input type="text" name="elecAddress" value="${item.elecAddress}" id="elecAddress" /></td>
+                    <td><input type="text" name="elecAddress" value="${item.elecAddress}" id="elecAddress" class="form-control" /></td>
                 </tr>
 
                 <tr>
@@ -50,12 +53,12 @@
 
                 <tr>
                     <td>
-                        <select id="city" name="city">
+                        <select id="city" name="city" class="form-control">
                             <option value="city" >Hà Nội</option>
                         </select>
                     </td>
                     <td>
-                        <select name="district" id="district" onchange="loadWards" >
+                        <select name="district" id="district" onchange="loadWards" class="form-control">
                             <option>${item.district}</option>
                             <c:forEach items="${listDis}" var="item">
                                 <option>${item.nameOfDistrict}</option>
@@ -64,7 +67,7 @@
                     </td>
 
                     <td>
-                        <select name="wards" id="wards" >
+                        <select name="wards" id="wards" class="form-control">
                             <option>${item.wards}</option>
                         </select>
                     </td>
@@ -79,16 +82,16 @@
 
                 <tr>
                     <td>
-                        <input type="text" name="idCard" value="${item.idCard}" />
+                        <input type="text" name="idCard" value="${item.idCard}" class="form-control" />
                     </td>
                     <td>
-                        <input type="date" name="dateOfId" value="" />
+                        <input type="date" name="dateOfId" value="${item.dateOfId}" class="form-control" />
                     </td>
                     <td>
-                        <input type="text" name="placeOfId" value="${item.placeOfId}" />
+                        <input type="text" name="placeOfId" value="${item.placeOfId}" class="form-control" />
                     </td>
                     <td>
-                        <select name="phaseNumber" >
+                        <select name="phaseNumber" class="form-control">
                             <option>${item.phaseNumber}</option>
                             <c:if test = "${item.phaseNumber =='3'}">
                                 <option>1</option>
@@ -111,7 +114,7 @@
                 <tr>
                     <td>
                         Trạng thái: 
-                        <select name="status">
+                        <select name="status" class="form-control">
                             <option>${item.status}</option>
                             <c:if test = "${item.status =='Chờ duyệt'}">
                                 <option>Đã duyệt</option>
@@ -121,29 +124,31 @@
                             </c:if>
                         </select>
                     </td>
-                    <td><input name="id" value="${item.id}" style="visibility: hidden;"/></td>
+                    <td style="display: none"><input name="id" value="${item.id}" style="display:  none;" class="form-control"/></td>
                 </tr>
             </table>
-            <input type="submit" value="Cập nhật" id="submit"/>
+            <input type="submit" value="Cập nhật" id="submit" class="btn btn-primary"/>
         </form>
         <% } %>
+        
+        <!-- Thêm liên kết tới các tệp JavaScript của Bootstrap -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <script>
+            document.getElementById("district").addEventListener("change", loadWards);
+            function loadWards() {
+                var districtSelect = document.getElementById("district");
+                var selectedDistrict = districtSelect.value;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var WardsSelect = document.getElementById("wards");
+                        WardsSelect.innerHTML = xhr.responseText;
+                    }
+                };
+
+                xhr.open("POST", "WardController?district=" + selectedDistrict, true);
+                xhr.send();
+            }
+        </script>
     </body>
-    <script>
-        document.getElementById("district").addEventListener("change", loadWards);
-        function loadWards() {
-            var districtSelect = document.getElementById("district");
-            var selectedDistrict = districtSelect.value;
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var WardsSelect = document.getElementById("wards");
-                    WardsSelect.innerHTML = xhr.responseText;
-                }
-            };
-
-            xhr.open("POST", "WardController?district=" + selectedDistrict, true);
-            xhr.send();
-        }
-    </script>
-
 </html>

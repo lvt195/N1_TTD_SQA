@@ -18,8 +18,6 @@
         <title>Quản lí đăng ký mua điện</title>
     </head>
     <body>
-        <jsp:include page="menuadmin.jsp" />
-
         <!--Kiểm tra xem người dùng đã đăng nhập hay chưa-->
         <% HttpSession sss = request.getSession();
             String userRole = (String) sss.getAttribute("vaitro");
@@ -27,6 +25,7 @@
                 // Nếu không có vai trò hoặc vai trò không phải là "admin", chuyển hướng đến trang khác hoặc hiển thị thông báo lỗi
                 response.sendRedirect("unauthorized.jsp");
             } else {%>
+            <jsp:include page="menuadmin.jsp" />
             <div class="container-fluid" style="padding: 120px 40px 0px 40px" >
             <h1 class="text-center mb-5">Quản lý đăng ký mua điện tại Hà Nội</h1>
             <table class="table table-striped">
