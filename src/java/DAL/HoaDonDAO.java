@@ -16,8 +16,8 @@ public class HoaDonDAO {
     public List<Bill> getBillsByUserCCCD(String cccd) throws SQLException {
         List<Bill> bills = new ArrayList<>();
         Connection conn = DBConnect.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps = null ;
+        ResultSet rs = null ;
         String q = "SELECT * FROM bills "
                 + "INNER JOIN electricboard eb ON bills.id_electricboard = eb.id "
                 + "INNER JOIN elecregistration er ON eb.id_elecRegistration = er.id ";
@@ -34,7 +34,9 @@ public class HoaDonDAO {
             while (rs.next()) {
                 Bill bill = new Bill();
                 bill.setId_bill(rs.getInt("id_bill"));
-                ElectricBoard electricBoard = loadElectricBoard(rs.getInt("id_electricboard"));
+                ElectricBoard electricBoard = new ElectricBoard();
+                electricBoard = loadElectricBoard(rs.getInt("id_electricboard"));
+                elecRegistration eRegistration = new elecRegistration();
                 elecRegistration elecRegistration = loadElecRegistration(rs.getInt("id_elecregistration"));
                 User admin = loadUser(rs.getInt("id_admin"));
                 bill.setElectricBoard(electricBoard);

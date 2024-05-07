@@ -36,6 +36,7 @@ public class HoaDonDetailController extends HttpServlet {
         }
 
         // Lấy id_bill từ request parameter
+        
         String idBillStr = request.getParameter("id");
         if (idBillStr == null || idBillStr.isEmpty()) {
             // Nếu không có id_bill, trả về mã lỗi 400 Bad Request
@@ -52,6 +53,7 @@ public class HoaDonDetailController extends HttpServlet {
             if (bill != null) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 jsonObject.put("id_bill", bill.getId_bill());
+                jsonObject.put("elec_provider", "EVN Hà Nội");
                 jsonObject.put("meter_code", bill.getElectricBoard().getMeter_code());
                 jsonObject.put("fullname", bill.getElecRegistration().getFullName());
                 jsonObject.put("elecaddress", bill.getElecRegistration().getElecAddress());

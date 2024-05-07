@@ -38,7 +38,6 @@ public class HoaDonController extends HttpServlet {
             }
         }
 
-
         try {
             HoaDonDAO hoaDonDAO = new HoaDonDAO();
             JSONArray jsonArray = new JSONArray();

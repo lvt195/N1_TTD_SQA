@@ -69,7 +69,7 @@ public class CapNhatSoDienController extends HttpServlet {
         String period=(String)request.getParameter("period");
         electricBoard.setPeroid(period);
         java.sql.Date time_start=java.sql.Date.valueOf(request.getParameter("time_start"));
-        electricBoard.setTime_update(time_start);
+        electricBoard.setTime_start(time_start);
         java.sql.Date time_update=java.sql.Date.valueOf(request.getParameter("time_update"));
         electricBoard.setTime_update(time_update);
         int sodiencu=Integer.parseInt(request.getParameter("sodiencu"));
@@ -78,7 +78,8 @@ public class CapNhatSoDienController extends HttpServlet {
         int tsd=moi-sodiencu;
         electricBoard.setTotal_electricity(tsd);
         if((new ElectricBoardDAO()).suaElectricBoard(electricBoard, admin)) {
-        	response.sendRedirect("gdCapNhatSoDien.jsp");
+//        	response.sendRedirect("gdCapNhatSoDien.jsp");
+                request.getRequestDispatcher("gdCapNhatSoDien.jsp").forward(request, response);
         }
     }
     @Override

@@ -231,6 +231,8 @@ public class ElectricBoardDAO {
 //}
     public boolean themElectricBoard(ElectricBoard electr, int sd, int tsd, User admin) {
         String sql = "INSERT INTO electricboard(meter_code,meter_address,period,meter_number,total_electricity,time_start,time_edit,time_update,id_admin,id_elecregistration,e_bill) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        String sqlTax = "SELECT tax FROM electricity.tax ORDER BY id DESC LIMIT 1";
+        String sqlPrice = "SELECT bacThang,donGia, sanLuong FROM electricity.bang_gia_dien";
         int result = 0;
         try (Connection con = DBConnect.getConnection()) {
             Calendar c = Calendar.getInstance();
@@ -250,6 +252,53 @@ public class ElectricBoardDAO {
             ps.setDate(8, new java.sql.Date(nY - 1900, nM, nD));
             ps.setInt(9, admin.getId());
             ps.setInt(10, electr.geteRegistration().getId());
+            
+            int total_electricity = tsd;
+            Date startTime = electr.getTime_edit();
+            Date endTime = new java.sql.Date(nY - 1900, nM, nD);
+            System.out.println("Start time: " + startTime);
+            System.out.println("End time: " + endTime);
+            
+            System.out.println("total_electricity" + total_electricity);
+            LocalDate startLocalDate = startTime.toLocalDate();
+            LocalDate endLocalDate = endTime.toLocalDate();
+            System.out.println("Start local date: " + startLocalDate);
+            System.out.println("End local date: " + endLocalDate);
+
+            long daysBetween = ChronoUnit.DAYS.between(startLocalDate, endLocalDate);
+            int daysInMonth = YearMonth.of(nY, nM + 1).lengthOfMonth();
+            System.out.println("Days in month: " + daysInMonth);
+            System.out.println("daysBetween: " + daysBetween);
+
+            long tong_tien = 0;
+
+            PreparedStatement psTax = con.prepareStatement(sqlTax);
+            ResultSet rsTax = psTax.executeQuery();
+            int tax = 0;
+            if (rsTax.next()) {
+                tax = rsTax.getInt("tax");
+            }
+            psTax.close();
+            System.out.println("Tax: " + tax + "%");
+            PreparedStatement psPrice = con.prepareStatement(sqlPrice);
+            ResultSet rsPrice = psPrice.executeQuery();
+            while (rsPrice.next()) {
+                int bacThang = rsPrice.getInt("bacThang");
+                int donGia = rsPrice.getInt("donGia");
+                int sanLuong = rsPrice.getInt("sanLuong");
+                int slTheoTime = SLTheoTime(sanLuong, daysInMonth, daysInMonth);
+                int slThuc = SLThuc(total_electricity, sanLuong, slTheoTime);
+                tong_tien = TongTienChuaThue(tong_tien, donGia, slThuc);
+                int soDienConLai = SoDienConLai(total_electricity, slTheoTime, sanLuong);
+                System.out.println("xxx"+ slTheoTime +"; "+slThuc +"; "+soDienConLai +"; "+tong_tien);
+                if(soDienConLai == -1) break;
+            }
+            psPrice.close();
+            System.out.println("tong_tien "+ tong_tien);
+            long tien_cuoi = TongTienCoThue(tong_tien, tax);
+            System.out.println("Final bill: " + tien_cuoi);
+           
+            ps.setLong(11, tien_cuoi);
             result = ps.executeUpdate();
             
             // Lấy id của ElectricBoard mới được thêm vào
@@ -318,10 +367,6 @@ public class ElectricBoardDAO {
         String sqlUpdate = "UPDATE electricboard SET meter_code=?,meter_address=?,period=?,meter_number=?,total_electricity=?,time_edit=?,time_update=?,id_admin=?,id_elecregistration=?, e_bill=? WHERE id = ?";
         String sqlTax = "SELECT tax FROM electricity.tax ORDER BY id DESC LIMIT 1";
         String sqlPrice = "SELECT bacThang,donGia, sanLuong FROM electricity.bang_gia_dien";
-//        //    ORDER BY id ASC";
-//
-//        String sqlSelectStartTime = "SELECT total_electricity,time_start FROM electricboard WHERE id = ?";
-//        String sqlUpdateEbill = "UPDATE electricboard SET e_bill=? WHERE id = ?";
 
         int result = 0;
         
@@ -341,56 +386,58 @@ public class ElectricBoardDAO {
             psUpdate.setDate(7, elect.getTime_update());
             psUpdate.setInt(8, admin.getId());
             psUpdate.setInt(9, elect.geteRegistration().getId());
+           
+            int total_electricity = elect.getTotal_electricity();
+            Date startTime = elect.getTime_start();
+            Date endTime = new java.sql.Date(nY - 1900, nM, nD);
+            System.out.println("Start time: " + startTime);
+            System.out.println("End time: " + endTime);
             
+            System.out.println("total_electricity" + total_electricity);
+            LocalDate startLocalDate = startTime.toLocalDate();
+            LocalDate endLocalDate = endTime.toLocalDate();
+            System.out.println("Start local date: " + startLocalDate);
+            System.out.println("End local date: " + endLocalDate);
+
+            long daysBetween = ChronoUnit.DAYS.between(startLocalDate, endLocalDate);
+            int daysInMonth = YearMonth.of(nY, nM + 1).lengthOfMonth();
+            System.out.println("Days in month: " + daysInMonth);
+            System.out.println("daysBetween: " + daysBetween);
+
+            long tong_tien = 0;
+
+            PreparedStatement psTax = con.prepareStatement(sqlTax);
+            ResultSet rsTax = psTax.executeQuery();
+            int tax = 0;
+            if (rsTax.next()) {
+                tax = rsTax.getInt("tax");
+            }
+            psTax.close();
+            System.out.println("Tax: " + tax + "%");
+            PreparedStatement psPrice = con.prepareStatement(sqlPrice);
+            ResultSet rsPrice = psPrice.executeQuery();
+            while (rsPrice.next()) {
+                int bacThang = rsPrice.getInt("bacThang");
+                int donGia = rsPrice.getInt("donGia");
+                int sanLuong = rsPrice.getInt("sanLuong");
+                int slTheoTime = SLTheoTime(sanLuong, daysInMonth, daysInMonth);
+                int slThuc = SLThuc(total_electricity, sanLuong, slTheoTime);
+                tong_tien = TongTienChuaThue(tong_tien, donGia, slThuc);
+                int soDienConLai = SoDienConLai(total_electricity, slTheoTime, sanLuong);
+                System.out.println("xxx"+ slTheoTime +"; "+slThuc +"; "+soDienConLai +"; "+tong_tien);
+                if(soDienConLai == -1) break;
+            }
+            psPrice.close();
+            System.out.println("tong_tien "+ tong_tien);
+            long tien_cuoi = TongTienCoThue(tong_tien, tax);
+            System.out.println("Final bill: " + tien_cuoi);
+           
+            psUpdate.setLong(10, tien_cuoi);
             psUpdate.setInt(11, elect.getId());
            
 
-                Date startTime = elect.getTime_start();
-               
-                Date endTime = new java.sql.Date(nY - 1900, nM, nD);
-                System.out.println("Start time: " + startTime);
-                System.out.println("End time: " + endTime);
-                int total_electricity = elect.getTotal_electricity();
-                System.out.println("total_electricity" + total_electricity);
-                LocalDate startLocalDate = startTime.toLocalDate();
-                LocalDate endLocalDate = endTime.toLocalDate();
-                System.out.println("Start local date: " + startLocalDate);
-                System.out.println("End local date: " + endLocalDate);
-
-                long daysBetween = ChronoUnit.DAYS.between(startLocalDate, endLocalDate);
-                int daysInMonth = YearMonth.of(nY, nM + 1).lengthOfMonth();
-                System.out.println("Days in month: " + daysInMonth);
-                System.out.println("daysBetween: " + daysBetween);
-
-                long tong_tien = 0;
-
-                PreparedStatement psTax = con.prepareStatement(sqlTax);
-                ResultSet rsTax = psTax.executeQuery();
-                int tax = 0;
-                if (rsTax.next()) {
-                    tax = rsTax.getInt("tax");
-                }
-                psTax.close();
-                System.out.println("Tax: " + tax + "%");
-                PreparedStatement psPrice = con.prepareStatement(sqlPrice);
-                ResultSet rsPrice = psPrice.executeQuery();
-                while (rsPrice.next()) {
-                    int bacThang = rsPrice.getInt("bacThang");
-                    int donGia = rsPrice.getInt("donGia");
-                    int sanLuong = rsPrice.getInt("sanLuong");
-                    int slTheoTime = SLTheoTime(sanLuong, daysInMonth, daysInMonth);
-                    int slThuc = SLThuc(total_electricity, sanLuong, slTheoTime);
-                    tong_tien = TongTienChuaThue(tong_tien, donGia, slThuc);
-                    int soDienConLai = SoDienConLai(total_electricity, slTheoTime, sanLuong);
-                    if(soDienConLai == -1) break;
-                }
-                psPrice.close();
-                long tien_cuoi = TongTienCoThue(tong_tien, tax);
-//                System.out.println("tong_tien " + tong_tien);
-//                long tien_cuoi = tong_tien + Math.round(tong_tien * tax / 100);
-                System.out.println("Final bill: " + tien_cuoi);
-            psUpdate.setLong(10, tien_cuoi);
             result = psUpdate.executeUpdate();
+           
             psUpdate.close();
 
         } catch (Exception e) {
@@ -399,6 +446,116 @@ public class ElectricBoardDAO {
 
         return result > 0;
     }
+//     public boolean suaElectricBoard(ElectricBoard elect, User admin) {
+//        String sqlUpdate = "UPDATE electricboard SET meter_code=?,meter_address=?,period=?,meter_number=?,total_electricity=?,time_edit=?,time_update=?,id_admin=?,id_elecregistration=?, e_bill=? WHERE id = ?";
+//        String sqlTax = "SELECT tax FROM electricity.tax ORDER BY id DESC LIMIT 1";
+//        String sqlPrice = "SELECT bacThang,donGia, sanLuong FROM electricity.bang_gia_dien";
+//        //    ORDER BY id ASC";
+//
+//        String sqlSelectStartTime = "SELECT total_electricity,time_start FROM electricboard WHERE id = ?";
+//        String sqlUpdateEbill = "UPDATE electricboard SET e_bill=? WHERE id = ?";
+//
+//        int result = 0;
+//        
+//        try (Connection con = DBConnect.getConnection()) {
+//            // Sửa thông tin của electricboard
+//            PreparedStatement psUpdate = con.prepareStatement(sqlUpdate);
+//            psUpdate.setString(1, elect.getMeter_code());
+//            psUpdate.setString(2, elect.getMeter_address());
+//            psUpdate.setString(3, elect.getPeroid());
+//            psUpdate.setInt(4, elect.getMeter_number());
+//            psUpdate.setInt(5, elect.getTotal_electricity());
+//            Calendar c = Calendar.getInstance();
+//            int nY = c.get(Calendar.YEAR);
+//            int nM = c.get(Calendar.MONTH);
+//            int nD = c.get(Calendar.DAY_OF_MONTH);
+//            psUpdate.setDate(6, new java.sql.Date(nY - 1900, nM, nD));
+//            psUpdate.setDate(7, elect.getTime_update());
+//            psUpdate.setInt(8, admin.getId());
+//            psUpdate.setInt(9, elect.geteRegistration().getId());
+//            psUpdate.setInt(10, -1);
+//            psUpdate.setInt(11, elect.getId());
+//            result = psUpdate.executeUpdate();
+//
+//            // Truy vấn và in giá trị start_time
+//            PreparedStatement psSelectStartTime = con.prepareStatement(sqlSelectStartTime);
+//            psSelectStartTime.setInt(1, elect.getId());
+//            ResultSet rsStartTime = psSelectStartTime.executeQuery();
+//
+//            if (rsStartTime.next()) {
+//                Date startTime = rsStartTime.getDate("time_start");
+//               
+//                Date endTime = new java.sql.Date(nY - 1900, nM, nD);
+//                System.out.println("Start time: " + startTime);
+//                System.out.println("End time: " + endTime);
+//                int total_electricity = rsStartTime.getInt("total_electricity");
+//                System.out.println("total_electricity" + total_electricity);
+//                LocalDate startLocalDate = startTime.toLocalDate();
+//                LocalDate endLocalDate = endTime.toLocalDate();
+//                System.out.println("Start local date: " + startLocalDate);
+//                System.out.println("End local date: " + endLocalDate);
+//
+//                long daysBetween = ChronoUnit.DAYS.between(startLocalDate, endLocalDate);
+//                int daysInMonth = YearMonth.of(nY, nM + 1).lengthOfMonth();
+//                System.out.println("Days in month: " + daysInMonth);
+//                System.out.println("daysBetween: " + daysBetween);
+//
+//                long tong_tien = 0;
+//
+//                PreparedStatement psTax = con.prepareStatement(sqlTax);
+//                ResultSet rsTax = psTax.executeQuery();
+//                int tax = 0;
+//                if (rsTax.next()) {
+//                    tax = rsTax.getInt("tax");
+//                }
+//                psTax.close();
+//                System.out.println("Tax: " + tax + "%");
+//                PreparedStatement psPrice = con.prepareStatement(sqlPrice);
+//                ResultSet rsPrice = psPrice.executeQuery();
+//                while (rsPrice.next()) {
+//                    int bacThang = rsPrice.getInt("bacThang");
+//                    int donGia = rsPrice.getInt("donGia");
+//                    int sanLuong = rsPrice.getInt("sanLuong");
+////                    long x = Math.round((sanLuong / daysInMonth) * daysBetween);
+////                    long sl = x;
+////                    if (total_electricity >= x && sanLuong != 0) {
+////                        sl = x;
+////                    } else {
+////                        sl = total_electricity;
+////                    }
+////                    tong_tien = tong_tien + (donGia * sl);
+////                    System.out.println("Don gia: " + donGia + ", San luong: " + sl + ", Tong tien: " + tong_tien);
+////                    if (total_electricity >= x && sanLuong != 0) {
+////                        total_electricity -= x;
+////                    } else {
+////                        break;
+////                    }
+//                    int slTheoTime = SLTheoTime(sanLuong, daysInMonth, daysInMonth);
+//                    int slThuc = SLThuc(total_electricity, sanLuong, slTheoTime);
+//                    tong_tien = TongTienChuaThue(tong_tien, donGia, slThuc);
+//                    int soDienConLai = SoDienConLai(total_electricity, slTheoTime, sanLuong);
+//                    if(soDienConLai == -1) break;
+//                }
+//                psPrice.close();
+//                long tien_cuoi = TongTienCoThue(tong_tien, tax);
+////                System.out.println("tong_tien " + tong_tien);
+////                long tien_cuoi = tong_tien + Math.round(tong_tien * tax / 100);
+//                System.out.println("Final bill: " + tien_cuoi);
+//                PreparedStatement psUpdateEbill = con.prepareStatement(sqlUpdateEbill);
+//                psUpdateEbill.setLong(1, tien_cuoi);
+//                psUpdateEbill.setInt(2, elect.getId());
+//                int updatedRows = psUpdateEbill.executeUpdate();
+//                psUpdateEbill.close();
+//            }
+//            psSelectStartTime.close();
+//            psUpdate.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return result > 0;
+//    }
     public int SLTheoTime(int sanLuong, int daysInMonth, int daysBetween ){
         int x = Math.round((sanLuong / daysInMonth) * daysBetween);
         return x;

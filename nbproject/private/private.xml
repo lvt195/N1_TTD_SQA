@@ -12,12 +12,28 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/DangXuatController.java</file>
             <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/DAL/ElectricBoardDAO.java</file>
-            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/DangNhapController.java</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/web/dangnhap.jsp</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/HoaDonDetailController.java</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/DAL/HoaDonDAO.java</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/billDetail.jsp</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/HoaDonController.java</file>
             <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/DangKyControler.java</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/web/bill.jsp</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Model/Bill.java</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/web/congcutinhtiendien.html</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/DangXuatController.java</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/web/menuadmin.jsp</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/DangNhapController.java</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/web/bill.html</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/web/dangkythanhcong.jsp</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/TrangChuController.java</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/web/menu.jsp</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/web/dangky.jsp</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/web/billDetail.html</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Model/User.java</file>
             <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/CapNhatSoDienController.java</file>
-            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Control/DoiMatKhauController.java</file>
+            <file>file:/C:/Users/lvt-195/OneDrive/Documents/NetBeansProjects/BaiCoNgoc/src/java/Model/elecRegistration.java</file>
         </group>
     </open-files>
 </project-private>
