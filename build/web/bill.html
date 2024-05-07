@@ -14,14 +14,7 @@
         </style>
     </head>
     <body>
-        <!--        <div class="menu">
-                    <div class="tacvu">
-                         EVNHANOI
-                    </div>
-                    <div class="tacvu">
-                         <button class="button" name="back" onclick="history.back()" style="border: none;" > Trang Chủ </button>
-                    </div>
-                </div>-->
+
         <div id="menuPlaceholder"></div>
 
         <div class="container" style="padding-top: 120px">
@@ -52,10 +45,10 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <script>
-//            if (location.pathname.substr(-5) === '.html') {
-//                var newURL = location.pathname.slice(0, -5);
-//                window.history.replaceState({}, document.title, newURL);
-//            }
+            if (location.pathname.substr(-5) === '.html') {
+                var newURL = location.pathname.slice(0, -5);
+                window.history.replaceState({}, document.title, newURL);
+            }
             let menu = "menu.jsp";
 
             function parseDate(dateString) {

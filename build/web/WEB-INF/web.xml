@@ -72,8 +72,5 @@
         <servlet-name>detailElec</servlet-name>
         <url-pattern>/detailElec</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>HoaDonController1</servlet-name>
-        <url-pattern>/bill</url-pattern>
-    </servlet-mapping>
+
 </web-app>
