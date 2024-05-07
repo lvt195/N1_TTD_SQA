@@ -4,6 +4,7 @@
  */
 package Control;
 
+import DAL.elecRegitrationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,32 +12,39 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 
 /**
  *
- * @author Mai-NT
+ * @author tuyen
  */
-@WebServlet(name = "DangXuatController", urlPatterns = {"/dangxuatcontroller"})
-public class DangXuatController extends HttpServlet {
+@WebServlet(name = "deleteRegis", urlPatterns = {"/deleteRegis"})
+public class deleteRegis extends HttpServlet {
+
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet deleteRegis</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet deleteRegis at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            session.invalidate();
-            session = request.getSession();
-            //session.setAttribute("message", "Đăng xuất thành công.Hãy đăng nhập lại");
-            request.getRequestDispatcher("trangchu.jsp").forward(request, response);
-//            response.sendRedirect("trangchu.jsp");
-        }
+        int id=Integer.parseInt(request.getParameter("id"));
+        elecRegitrationDAO dao= new elecRegitrationDAO();
+        dao.deleteRegis(id);
+        response.sendRedirect("ManageElecRegis");
     }
 
     @Override

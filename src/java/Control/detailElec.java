@@ -4,39 +4,53 @@
  */
 package Control;
 
+import DAL.districtDAO;
+import DAL.elecRegitrationDAO;
+import Model.district;
+import Model.elecRegistration;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 
 /**
  *
- * @author Mai-NT
+ * @author lvt-195
  */
-@WebServlet(name = "DangXuatController", urlPatterns = {"/dangxuatcontroller"})
-public class DangXuatController extends HttpServlet {
+@WebServlet(name = "detailElec", urlPatterns = {"/detailElec"})
+public class detailElec extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet detailElec</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet detailElec at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            session.invalidate();
-            session = request.getSession();
-            //session.setAttribute("message", "Đăng xuất thành công.Hãy đăng nhập lại");
-            request.getRequestDispatcher("trangchu.jsp").forward(request, response);
-//            response.sendRedirect("trangchu.jsp");
-        }
+        int id = Integer.parseInt(request.getParameter("id"));
+        elecRegitrationDAO dao = new elecRegitrationDAO();
+        elecRegistration item = dao.getElecbyId(id);
+        request.setAttribute("item", item);
+        request.getRequestDispatcher("DetailElec.jsp").forward(request, response);
     }
 
     @Override

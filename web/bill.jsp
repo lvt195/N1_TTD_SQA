@@ -1,3 +1,10 @@
+<%-- 
+    Document   : bill.jsp
+    Created on : May 6, 2024, 8:18:55 PM
+    Author     : lvt-195
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,15 +21,24 @@
         </style>
     </head>
     <body>
-        <!--        <div class="menu">
-                    <div class="tacvu">
-                         EVNHANOI
-                    </div>
-                    <div class="tacvu">
-                         <button class="button" name="back" onclick="history.back()" style="border: none;" > Trang Chủ </button>
-                    </div>
-                </div>-->
-        <div id="menuPlaceholder"></div>
+<!--        <div class="menu">
+            <div class="tacvu">
+                 EVNHANOI
+            </div>
+            <div class="tacvu">
+                 <button class="button" name="back" onclick="history.back()" style="border: none;" > Trang Chủ </button>
+            </div>
+        </div>-->
+        <%String vt=(String)session.getAttribute("vaitro");
+        if(vt.equals("user"))
+        %><jsp:include page="/menuuser.jsp"/>
+        <%
+         if(vt.equals("admin")){    
+        %>
+        <jsp:include page="/menuadmin.jsp"/>
+        <%
+            }
+        %>
 
         <div class="container" style="padding-top: 120px">
             <h1 class="text-center mb-4">Thanh toán tiền điện sinh hoạt của hộ cá nhân</h1>
@@ -52,10 +68,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <script>
-//            if (location.pathname.substr(-5) === '.html') {
-//                var newURL = location.pathname.slice(0, -5);
-//                window.history.replaceState({}, document.title, newURL);
-//            }
             let menu = "menu.jsp";
 
             function parseDate(dateString) {
@@ -75,22 +87,24 @@
                     document.getElementById('billTableBody').innerHTML = '<tr><td colspan="7" class="text-center">Đang tải dữ liệu...</td></tr>';
 
                     const response = await fetch('/BaiCoNgoc/getHoaDon');
+                    
                     const rawData = await response.text();
                     const parsedData = JSON.parse(rawData);
-
+                    
                     // Kiểm tra xem thuộc tính `vaitro` có tồn tại trong dữ liệu không
                     let role = "null";
 
                     // Kiểm tra và lấy giá trị `vaitro` từ tất cả các hóa đơn
-                    const vaitroList = parsedData.map(item => item.vaitro);
-                    console.log(vaitroList);
+//                    const vaitroList = parsedData.map(item => item.vaitro);
+                    
                     // Nếu có ít nhất một hóa đơn có `vaitro` là "admin", gán giá trị cho biến `menu`
-                    if (vaitroList.includes("admin")) {
-                        menu = "menuadmin.jsp";
-                    } else if (vaitroList.includes("user")) {
-                        menu = "menuuser.jsp";
-                    }
-
+//                    if (vaitroList.includes("admin")) {
+//                        menu = "menuadmin.jsp";
+//                    } else if (vaitroList.includes("user")) {
+//                        menu = "menuuser.jsp";
+//                    }
+                    
+                    
                     let tableContent = '';
 
                     if (parsedData.length === 0) {
@@ -102,6 +116,8 @@
             `;
                     } else {
                         parsedData.forEach((item, index) => {
+                            
+                            
                             const stt = index + 1; // Số thứ tự bắt đầu từ 1
 
                             // Mặc định là không có màu
@@ -117,23 +133,73 @@
                             } else {
                                 rowClass = 'table-warning'; // Thêm lớp CSS 'table-warning' để hiển thị hóa đơn chưa đến hạn bằng màu vàng
                             }
+                            let id_bi=item.id_bill;
+                            //Phai lam sao ha ban=))
+                            let tr = `
+                                <tr class="${rowClass}">
+                                    <td><p>stt</p></td>
+                                    <td>${item.id_bill}</td>
+                                    <td>${item.period}</td>
+                                    <td>${item.meter_number}</td>
+                                    <td>${item.payment_due_date}</td>
+                                    <td>${item.is_paid ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
+                                    <td><a href="billDetail.html?id=${item.id_bill}" class="btn btn-primary">Chi tiết</a></td>
+                                </tr>
+                            `;
+                            // no dang k do duoc data vao chuoi tr kia 
+                            // minh chuyen ve text duoc k nhe
 
-                            tableContent += `
-                    <tr class="${rowClass}">
-                        <td>${stt}</td>
-                        <td>${item.id_bill}</td>
-                        <td>${item.period}</td>
-                        <td>${item.meter_number}</td>
-                        <td>${item.payment_due_date}</td>
-                        <td>${item.is_paid ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
-                        <td>${`<a href="billDetail.html?id=${item.id_bill}" class="btn btn-primary">Chi tiết</a>`}</td>
-                    </tr>
-                `;
+//                            tableContent += `
+//                                <tr class="${rowClass}">
+//                                    <td><p>stt</p></td>
+//                                    <td>${item.id_bill}</td>
+//                                    <td>${item.period}</td>
+//                                    <td>${item.meter_number}</td>
+//                                    <td>${item.payment_due_date}</td>
+//                                    <td>${item.is_paid ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
+//                                    <td><a href="billDetail.html?id=${item.id_bill}" class="btn btn-primary">Chi tiết</a></td>
+//                                </tr>
+//                            `;
                         });
-                    }
+                        
+                        let arr = parsedData.map((item, index) => {
+                            let rowClass = '';
+                            const currentDate = new Date();
+                            currentDate.setHours(0, 0, 0, 0);
+                            const paymentDueDate = parseDate(item.payment_due_date);
 
+                            if (item.is_paid) {
+                                rowClass = 'table-success'; // Thêm lớp CSS 'table-success' để hiển thị hóa đơn đã thanh toán bằng màu xanh lá cây
+                            } else if (paymentDueDate < currentDate) {
+                                rowClass = 'table-danger'; // Thêm lớp CSS 'table-danger' để hiển thị hóa đơn quá hạn bằng màu đỏ
+                            } else {
+                                rowClass = 'table-warning'; // Thêm lớp CSS 'table-warning' để hiển thị hóa đơn chưa đến hạn bằng màu vàng
+                            }
+                            
+                            let stringHTML = '<tr class=' + rowClass + '>';
+                            stringHTML += '<td><p>' + (index + 1) + '</p></td>'; // Số thứ tự (index + 1)
+                            stringHTML += '<td>' + item.id_bill + '</td>'; // ID hóa đơn
+                            stringHTML += '<td>' + item.period + '</td>'; // Kỳ
+                            stringHTML += '<td>' + item.meter_number + '</td>'; // Số đồng hồ đo
+                            stringHTML += '<td>' + item.payment_due_date + '</td>'; // Ngày đáo hạn
+                            stringHTML += '<td>' + (item.is_paid ? 'Đã thanh toán' : 'Chưa thanh toán') + '</td>'; // Trạng thái thanh toán
+                            stringHTML += '<td><a href="billDetail.html?id=' + item.id_bill + '" class="btn btn-primary">Chi tiết</a></td>'; // Liên kết đến trang chi tiết hóa đơn
+                            stringHTML += '</tr>';
+                            return stringHTML;
+                            
+//                            noi chuoi xong nho join arr vao nhe
+                        });
+                        let contentHTML = arr.join("");
+                        console.log(contentHTML);
+                        document.getElementById('billTableBody').innerHTML = contentHTML;
+                        
+                    }
+                   
                     // Cập nhật nội dung bảng
-                    document.getElementById('billTableBody').innerHTML = tableContent;
+                    
+
+                    
+                    
 
                 } catch (error) {
                     console.error("Error fetching data:", error);
@@ -155,3 +221,4 @@
         </script>
     </body>
 </html>
+

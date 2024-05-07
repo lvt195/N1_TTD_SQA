@@ -83,9 +83,8 @@ public class elecRegitrationDAO {
 
     public void updateElec(int id,String fullName, String phone, String gmail, String placeOfResidence, String elecAddress, String city, String district,String wards, String idCard,String dateOfId, String placeOfId, String phaseNumber, String personalDoc, String dits, String status) {
         try {
-            String query = "SELECT * FROM electricity.elecregistration;\n"
-                    + "Update electricity.elecregistration\n"
-                    + "fullName=?,\n"
+            String query = "Update electricity.elecregistration\n"
+                    + "SET fullName=?,\n"
                     + "phone=?,\n"
                     + "gmail=?,\n"
                     + "placeOfResidence=?,\n"
@@ -100,7 +99,7 @@ public class elecRegitrationDAO {
                     + "personalDoc=?,\n"
                     + "dits=?,\n"
                     + "status=?\n"
-                    + "where idElecRegis=?;";
+                    + "where id=?;";
             con = new DBConnect().getConnection();
             ps = con.prepareStatement(query);
             ps.setString(1,fullName);
@@ -126,7 +125,7 @@ public class elecRegitrationDAO {
 
     public void deleteRegis(int id) {
         try {
-            String query = "delete from electricity.elecregistration where idElecRegis=?;";
+            String query = "delete from electricity.elecregistration where id=?;";
             con = new DBConnect().getConnection();
             ps = con.prepareStatement(query);
             ps.setInt(1, id);

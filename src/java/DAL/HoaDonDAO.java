@@ -187,21 +187,23 @@ public class HoaDonDAO {
     }
 
     public User loadUser(int id) {
-        User user = null;
+        
         String sql = "SELECT * FROM user WHERE id = ?";
         try (Connection con = DBConnect.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                User user = new User();
                 user.setId(rs.getInt("id"));
-                user.setPhone(rs.getString("phone"));
                 user.setCccd(rs.getString("cccd"));
-                user.setEmail(rs.getString("email"));
+                user.setEmail(rs.getString("contact"));
                 user.setRole(rs.getString("role"));
                 return user;
             }
         } catch (Exception e) {
+            //            User user = new User(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7) );
+           //             return user;
             e.printStackTrace();
         }
         return null;

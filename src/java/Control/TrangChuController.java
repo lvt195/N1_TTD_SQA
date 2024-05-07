@@ -20,15 +20,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "TrangChuController", urlPatterns = {"/trangchucontroller"})
 public class TrangChuController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        response.setContentType("text/html;charset=UTF-8");
@@ -39,44 +30,29 @@ public class TrangChuController extends HttpServlet {
             switch (VT) {
                 case "admin":
                     session.setAttribute("message", "Chào mừng " + name);
-                    response.sendRedirect("gdChinhAdmin.jsp");
+                    request.getRequestDispatcher("gdChinhAdmin.jsp").forward(request, response);
+//                    response.sendRedirect("gdChinhAdmin.jsp");
                     break;
                 case "user":
                     session.setAttribute("message", "Chào mừng " + name);
-                    response.sendRedirect("gdChinhUser.jsp");
+                    request.getRequestDispatcher("gdChinhUser.jsp").forward(request, response);
+//                    response.sendRedirect("gdChinhUser.jsp");
                     break;
                 default:
-                    response.sendRedirect("trangchu.jsp");
+                    request.getRequestDispatcher("trangchu.jsp").forward(request, response);
+//                    response.sendRedirect("trangchu.jsp");
                     break;
             }
         } catch (Exception e) {
-            response.sendRedirect("trangchu.jsp");
+            request.getRequestDispatcher("trangchu.jsp").forward(request, response);
+//            response.sendRedirect("trangchu.jsp");
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

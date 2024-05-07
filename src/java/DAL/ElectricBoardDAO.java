@@ -17,6 +17,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 //import java.util.Date;
 import java.sql.Date;
@@ -149,11 +150,11 @@ public class ElectricBoardDAO {
             while (rs.next()) {
                 User admin = new User();
                 admin.setId(rs.getInt("id"));
-                admin.setUsername(name);
-                admin.setPassword(pass);
-                admin.setPhone(rs.getString("phone"));
-                admin.setCccd(rs.getString("cccd"));
-                admin.setEmail(rs.getString("email"));
+//                admin.setUsername(name);
+//                admin.setPassword(pass);
+//                admin.setPhone(rs.getString("phone"));
+//                admin.setCccd(rs.getString("cccd"));
+//                admin.setEmail(rs.getString("email"));
                 return admin;
             }
         } catch (Exception e) {
@@ -162,20 +163,83 @@ public class ElectricBoardDAO {
         return null;
     }
 
+//    public boolean themElectricBoard(ElectricBoard electr, int sd, int tsd, User admin) {
+//        String sql = "INSERT INTO electricboard(meter_code,meter_address,period,meter_number,total_electricity,time_start,time_edit,time_update,id_admin,id_elecregistration) VALUES(?,?,?,?,?,?,?,?,?,?)";
+//        int result = 0;
+//        Connection con = null;
+//        try  {
+//            con = DBConnect.getConnection();
+//            con.setAutoCommit(false);
+//
+//            Calendar c = Calendar.getInstance();
+//            int nY = c.get(Calendar.YEAR);
+//            int nM = c.get(Calendar.MONTH);
+//            int nD = c.get(Calendar.DAY_OF_MONTH);
+//            String gd = nY + "-" + String.format("%02d", nM + 1);
+//            PreparedStatement ps = con.prepareStatement(sql);
+//            ps.setString(1, electr.getMeter_code());
+//            ps.setString(2, electr.getMeter_address());
+//            ps.setString(3, gd);
+//            ps.setInt(4, sd);
+//            ps.setInt(5, tsd);
+//            ps.setDate(6, electr.getTime_edit());
+//            ps.setDate(7, new java.sql.Date(nY - 1900, nM, nD));
+//            ps.setDate(8, new java.sql.Date(nY - 1900, nM, nD));
+//            ps.setInt(9, admin.getId());
+////                        ps.setInt(9,1);
+//            ps.setInt(10, electr.geteRegistration().getId());
+//            result = ps.executeUpdate();
+//
+//            // Lấy id của ElectricBoard mới được thêm vào
+//            ResultSet generatedKeys = ps.getGeneratedKeys();
+//            int electricBoardId = -1;
+//            if (generatedKeys.next()) {
+//                electricBoardId = generatedKeys.getInt(1);
+//            } 
+//
+//            // Thêm hoá đơn mới vào cơ sở dữ liệu với id_ellectricBoard đã được lấy
+//            String billSql = "INSERT INTO bills(id_electricboard, id_elecregistration, id_admin, is_paid) VALUES (?, ?, ?, ?)";
+//            try (PreparedStatement billPs = con.prepareStatement(billSql)) {
+//                billPs.setInt(1, electricBoardId);
+//                billPs.setInt(2, electr.geteRegistration().getId());
+//                billPs.setInt(3, admin.getId());
+//                billPs.setBoolean(4, false); // Mặc định chưa thanh toán
+//                billPs.executeUpdate();
+//            }
+//
+//        con.commit();
+//    } catch (Exception e) {
+//        if (con != null) {
+//            try {
+//                con.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//        e.printStackTrace();
+//    } finally {
+//        if (con != null) {
+//            try {
+//                con.setAutoCommit(true);
+//                con.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+//    return result > 0;
+//}
     public boolean themElectricBoard(ElectricBoard electr, int sd, int tsd, User admin) {
-        String sql = "INSERT INTO electricboard(meter_code,meter_address,period,meter_number,total_electricity,time_start,time_edit,time_update,id_admin,id_elecregistration) VALUES(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO electricboard(meter_code,meter_address,period,meter_number,total_electricity,time_start,time_edit,time_update,id_admin,id_elecregistration,e_bill) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         int result = 0;
-        Connection con = null;
-        try  {
-            con = DBConnect.getConnection();
-            con.setAutoCommit(false);
-
+        try (Connection con = DBConnect.getConnection()) {
             Calendar c = Calendar.getInstance();
             int nY = c.get(Calendar.YEAR);
             int nM = c.get(Calendar.MONTH);
             int nD = c.get(Calendar.DAY_OF_MONTH);
             String gd = nY + "-" + String.format("%02d", nM + 1);
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
             ps.setString(1, electr.getMeter_code());
             ps.setString(2, electr.getMeter_address());
             ps.setString(3, gd);
@@ -185,10 +249,9 @@ public class ElectricBoardDAO {
             ps.setDate(7, new java.sql.Date(nY - 1900, nM, nD));
             ps.setDate(8, new java.sql.Date(nY - 1900, nM, nD));
             ps.setInt(9, admin.getId());
-//                        ps.setInt(9,1);
             ps.setInt(10, electr.geteRegistration().getId());
             result = ps.executeUpdate();
-
+            
             // Lấy id của ElectricBoard mới được thêm vào
             ResultSet generatedKeys = ps.getGeneratedKeys();
             int electricBoardId = -1;
@@ -205,50 +268,35 @@ public class ElectricBoardDAO {
                 billPs.setBoolean(4, false); // Mặc định chưa thanh toán
                 billPs.executeUpdate();
             }
-
-        con.commit();
-    } catch (Exception e) {
-        if (con != null) {
-            try {
-                con.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            
+            
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        e.printStackTrace();
-    } finally {
-        if (con != null) {
-            try {
-                con.setAutoCommit(true);
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        return result > 0;
     }
-    return result > 0;
-}
 
     public boolean KhoiTaoElectricBoard(elecRegistration e, User admin) {
         String sql = "INSERT INTO electricboard(meter_code,meter_address,period,meter_number,total_electricity,time_start,time_edit,time_update,id_admin,id_elecregistration) VALUES(?,?,?,?,?,?,?,?,?,?)";
         int result = 0;
-        String sqlMaxId = "SELECT MAX(id) AS max_id FROM elecregistration";
+//        String sqlMaxId = "SELECT MAX(id) AS max_id FROM elecregistration";
         try (Connection con = DBConnect.getConnection()) {
-            PreparedStatement psMaxId = con.prepareStatement(sqlMaxId);
-            ResultSet rsMaxId = psMaxId.executeQuery();
-            int maxId = 0;
-            if (rsMaxId.next()) {
-                maxId = rsMaxId.getInt("max_id");
-            }
-            rsMaxId.close();
-            psMaxId.close();
+//            PreparedStatement psMaxId = con.prepareStatement(sqlMaxId);
+//            ResultSet rsMaxId = psMaxId.executeQuery();
+//            int maxId = 0;
+//            if (rsMaxId.next()) {
+//                maxId = rsMaxId.getInt("max_id");
+//            }
+//            rsMaxId.close();
+//            psMaxId.close();
             Calendar c = Calendar.getInstance();
             int nY = c.get(Calendar.YEAR);
             int nM = c.get(Calendar.MONTH);
             int nD = c.get(Calendar.DAY_OF_MONTH);
             String gd = nY + "-" + String.format("%02d", nM + 1);
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, "MC" + maxId);
+            ps.setString(1, "MC" + e.getId());
             ps.setString(2, e.getElecAddress());
             ps.setString(3, gd);
             ps.setInt(4, 0);
@@ -257,7 +305,7 @@ public class ElectricBoardDAO {
             ps.setDate(7, new java.sql.Date(nY - 1900, nM, nD));
             ps.setDate(8, new java.sql.Date(nY - 1900, nM, nD));
             ps.setInt(9, admin.getId());
-            ps.setInt(10, maxId);
+            ps.setInt(10, e.getId());
             result = ps.executeUpdate();
             ps.close();
         } catch (Exception ex) {
@@ -270,13 +318,13 @@ public class ElectricBoardDAO {
         String sqlUpdate = "UPDATE electricboard SET meter_code=?,meter_address=?,period=?,meter_number=?,total_electricity=?,time_edit=?,time_update=?,id_admin=?,id_elecregistration=?, e_bill=? WHERE id = ?";
         String sqlTax = "SELECT tax FROM electricity.tax ORDER BY id DESC LIMIT 1";
         String sqlPrice = "SELECT bacThang,donGia, sanLuong FROM electricity.bang_gia_dien";
-        //    ORDER BY id ASC";
-
-        String sqlSelectStartTime = "SELECT total_electricity,time_start FROM electricboard WHERE id = ?";
-        String sqlUpdateEbill = "UPDATE electricboard SET e_bill=? WHERE id = ?";
+//        //    ORDER BY id ASC";
+//
+//        String sqlSelectStartTime = "SELECT total_electricity,time_start FROM electricboard WHERE id = ?";
+//        String sqlUpdateEbill = "UPDATE electricboard SET e_bill=? WHERE id = ?";
 
         int result = 0;
-
+        
         try (Connection con = DBConnect.getConnection()) {
             // Sửa thông tin của electricboard
             PreparedStatement psUpdate = con.prepareStatement(sqlUpdate);
@@ -293,21 +341,16 @@ public class ElectricBoardDAO {
             psUpdate.setDate(7, elect.getTime_update());
             psUpdate.setInt(8, admin.getId());
             psUpdate.setInt(9, elect.geteRegistration().getId());
-            psUpdate.setInt(10, -1);
+            
             psUpdate.setInt(11, elect.getId());
-            result = psUpdate.executeUpdate();
+           
 
-            // Truy vấn và in giá trị start_time
-            PreparedStatement psSelectStartTime = con.prepareStatement(sqlSelectStartTime);
-            psSelectStartTime.setInt(1, elect.getId());
-            ResultSet rsStartTime = psSelectStartTime.executeQuery();
-
-            if (rsStartTime.next()) {
-                Date startTime = rsStartTime.getDate("time_start");
+                Date startTime = elect.getTime_start();
+               
                 Date endTime = new java.sql.Date(nY - 1900, nM, nD);
                 System.out.println("Start time: " + startTime);
                 System.out.println("End time: " + endTime);
-                int total_electricity = rsStartTime.getInt("total_electricity");
+                int total_electricity = elect.getTotal_electricity();
                 System.out.println("total_electricity" + total_electricity);
                 LocalDate startLocalDate = startTime.toLocalDate();
                 LocalDate endLocalDate = endTime.toLocalDate();
@@ -335,32 +378,19 @@ public class ElectricBoardDAO {
                     int bacThang = rsPrice.getInt("bacThang");
                     int donGia = rsPrice.getInt("donGia");
                     int sanLuong = rsPrice.getInt("sanLuong");
-                    long x = Math.round((sanLuong / daysInMonth) * daysBetween);
-                    long sl = x;
-                    if (total_electricity >= x && sanLuong != 0) {
-                        sl = x;
-                    } else {
-                        sl = total_electricity;
-                    }
-                    tong_tien = tong_tien + (donGia * sl);
-                    System.out.println("Don gia: " + donGia + ", San luong: " + sl + ", Tong tien: " + tong_tien);
-                    if (total_electricity >= x && sanLuong != 0) {
-                        total_electricity -= x;
-                    } else {
-                        break;
-                    }
+                    int slTheoTime = SLTheoTime(sanLuong, daysInMonth, daysInMonth);
+                    int slThuc = SLThuc(total_electricity, sanLuong, slTheoTime);
+                    tong_tien = TongTienChuaThue(tong_tien, donGia, slThuc);
+                    int soDienConLai = SoDienConLai(total_electricity, slTheoTime, sanLuong);
+                    if(soDienConLai == -1) break;
                 }
                 psPrice.close();
-                System.out.println("tong_tien " + tong_tien);
-                long tien_cuoi = tong_tien + Math.round(tong_tien * tax / 100);
+                long tien_cuoi = TongTienCoThue(tong_tien, tax);
+//                System.out.println("tong_tien " + tong_tien);
+//                long tien_cuoi = tong_tien + Math.round(tong_tien * tax / 100);
                 System.out.println("Final bill: " + tien_cuoi);
-                PreparedStatement psUpdateEbill = con.prepareStatement(sqlUpdateEbill);
-                psUpdateEbill.setLong(1, tien_cuoi);
-                psUpdateEbill.setInt(2, elect.getId());
-                int updatedRows = psUpdateEbill.executeUpdate();
-                psUpdateEbill.close();
-            }
-            psSelectStartTime.close();
+            psUpdate.setLong(10, tien_cuoi);
+            result = psUpdate.executeUpdate();
             psUpdate.close();
 
         } catch (Exception e) {
@@ -368,5 +398,24 @@ public class ElectricBoardDAO {
         }
 
         return result > 0;
+    }
+    public int SLTheoTime(int sanLuong, int daysInMonth, int daysBetween ){
+        int x = Math.round((sanLuong / daysInMonth) * daysBetween);
+        return x;
+    }
+    public int SLThuc(int soDien, int sanLuong, int slTheoTime ){
+        if(soDien>=slTheoTime && sanLuong!=0) return slTheoTime;
+        return soDien;
+    }
+    public long TongTienChuaThue(long tongTien, int donGia, int SlThuc){
+        return tongTien + (donGia * SlThuc);
+    }
+    public int SoDienConLai(int soDien, int slTheoTime, int sanLuong ){
+        if(soDien>=slTheoTime && sanLuong!=0) return soDien - slTheoTime;
+        return -1;
+    }
+    public long TongTienCoThue(long tongTien, int thue){
+        long tien_cuoi = tongTien + Math.round(tongTien * thue / 100);
+        return tien_cuoi;
     }
 }

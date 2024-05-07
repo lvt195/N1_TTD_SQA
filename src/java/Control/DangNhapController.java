@@ -23,16 +23,20 @@ import java.util.logging.Logger;
 @WebServlet(name = "dangnhapcontroller", urlPatterns = {"/sign-in"})
 public class DangNhapController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+ 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+         request.getRequestDispatcher("dangnhap.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -52,7 +56,8 @@ public class DangNhapController extends HttpServlet {
                     session.setAttribute("message", "Chào mừng " + name);
                     session.setAttribute("id_user", id);
                     session.setAttribute("cccd", cccd);
-                    response.sendRedirect("gdChinhUser.jsp");
+                    request.getRequestDispatcher("gdChinhUser.jsp").forward(request, response);
+//                    response.sendRedirect("gdChinhUser.jsp");
                     break;
                 case "admin":
                     session.setAttribute("name", name);
@@ -60,37 +65,17 @@ public class DangNhapController extends HttpServlet {
                     session.setAttribute("vaitro", VT);
                     session.setAttribute("id_admin", id);
                     session.setAttribute("message", "Chào mừng " + name);
-                    response.sendRedirect("gdChinhAdmin.jsp");
+                    request.getRequestDispatcher("gdChinhAdmin.jsp").forward(request, response);
+//                    response.sendRedirect("gdChinhAdmin.jsp");
                     break;
 
                 default:
                     request.setAttribute("message", "Tên hoặc mật khẩu sai!");
-                    response.sendRedirect("dangnhap.jsp");
+                    request.getRequestDispatcher("dangnhap.jsp").forward(request, response);
+//                    response.sendRedirect("dangnhap.jsp");
                     break;
             }
         }
-
-        // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-        /**
-         * Handles the HTTP <code>GET</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     @Override

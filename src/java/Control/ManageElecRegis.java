@@ -1,4 +1,3 @@
-
 package Control;
 
 import DAL.elecRegitrationDAO;
@@ -21,12 +20,14 @@ public class ManageElecRegis extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         elecRegitrationDAO elecDao = new elecRegitrationDAO();
         List<elecRegistration> elecList = elecDao.getAll();
         request.setAttribute("listElecRegis", elecList);
@@ -36,11 +37,11 @@ public class ManageElecRegis extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter writer = response.getWriter();
-        writer.println("doPost");
-        elecRegitrationDAO elecDao = new elecRegitrationDAO();
-        List<elecRegistration> elecList = elecDao.getAll();
-        request.setAttribute("listElecRegis", elecList);
-        request.getRequestDispatcher("showListElect.jsp").forward(request, response);
+//        PrintWriter writer = response.getWriter();
+//        writer.println("doPost");
+//        elecRegitrationDAO elecDao = new elecRegitrationDAO();
+//        List<elecRegistration> elecList = elecDao.getAll();
+//        request.setAttribute("listElecRegis", elecList);
+//        request.getRequestDispatcher("showListElect.jsp").forward(request, response);
     }
 }

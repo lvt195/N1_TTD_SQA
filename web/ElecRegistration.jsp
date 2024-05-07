@@ -5,7 +5,7 @@
 --%>
 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="DAL.districtDAO" %>
 <%@ page import="Model.district" %>
@@ -38,7 +38,7 @@
         %>
         <div class="container" style="padding-top: 120px">
             <h1 style="text-align: center">Đăng ký mua điện</h1>
-            <form action="ElecRegistration" method="POST" autocomplete="off" id="regis" enctype="multipart/form-data">
+            <form action="ElecRegistration" method="POST" autocomplete="off" id="regis">
                 <table class="table">
                     <thead>
                         <tr>
@@ -49,22 +49,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="text" name="fullName" value="" id="fullName" class="form-control" /></td>
-                            <td><input type="text" name="phone" value="" id="phone" maxlength="10" class="form-control" /></td>
-                            <td><input type="text" name="gmail" value="" class="form-control" /></td>
+                            <td><input type="text" name="fullName" id="fullName" class="form-control" /></td>
+                            <td><input type="text" name="phone" id="phone" maxlength="10" class="form-control" /></td>
+                            <td><input type="text" name="gmail" class="form-control" /></td>
                         </tr>
 
                         <tr>
                             <th>Nơi thường trú *</th>
                         </tr>
                         <tr>
-                            <td><input type="text" name="placeOfResidence" value="" id="placeOfResidence" class="form-control" /></td>
+                            <td><input type="text" name="placeOfResidence" id="placeOfResidence" class="form-control" /></td>
                         </tr>
                         <tr>
                             <th>Địa chỉ dùng điện *</th>
                         </tr>
                         <tr>
-                            <td><input type="text" name="elecAddress" value="" id="elecAddress" class="form-control" /></td>
+                            <td><input type="text" name="elecAddress" id="elecAddress" class="form-control" /></td>
                         </tr>
 
                         <tr>
@@ -76,6 +76,7 @@
                         <tr>
                             <td>
                                 <select id="city" name="city" class="form-control">
+                                    <option value="city">--Chọn Thành Phố--</option>
                                     <option value="city">Hà Nội</option>
                                 </select>
                             </td>
@@ -104,13 +105,13 @@
 
                         <tr>
                             <td>
-                                <input type="text" name="idCard" value="" class="form-control" id="IdCard"/>
+                                <input type="text" name="idCard" class="form-control" id="IdCard"/>
                             </td>
                             <td>
-                                <input type="date" name="dateOfId" value="" class="form-control" id="dateOfIdCard"/>
+                                <input type="date" name="dateOfId" class="form-control" id="dateOfIdCard"/>
                             </td>
                             <td>
-                                <input type="text" name="placeOfId" value="" class="form-control" id="placeOfIdCard"/>
+                                <input type="text" name="placeOfId" class="form-control" id="placeOfIdCard"/>
                             </td>
                             <td>
                                 <select name="phaseNumber" class="form-control">

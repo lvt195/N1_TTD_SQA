@@ -5,357 +5,362 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/menu.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>Công cụ tính tiền điện</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/menu.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <title>Công cụ tính tiền điện</title>
 
-</head>
+    </head>
 
-<body>
-    <div class="menu">
+    <body>
+        <div class="menu">
             <div class="tacvu">
-                 EVNHANOI
+                EVNHANOI
             </div>
             <div class="tacvu">
-                 <button class="button" name="back" onclick="history.back()" style="border: none;" > Trang Chủ </button>
+                <button class="button" name="back" onclick="history.back()" style="border: none;" > Trang Chủ </button>
             </div>
         </div>
-    <div style="max-width: 1140px; margin-left: auto; margin-right: auto; padding-left: 16px; padding-right: 16px;">
-        <h3
-            style="font-size: 3rem; font-weight: bold; color: #134197; padding: 20px; margin-bottom: 30px; position: relative; display: flex; align-items: center; justify-content: center;">
-            Công cụ tính tiền điện</h3>
-        <div style="background-color: #fff; border: 1px solid #ccc; padding: 12px; border-radius: 0.375rem;">
-            <div style="margin-bottom: 16px;">
-                <span style="font-size: 2rem;">Tính tiền điện sinh hoạt cho 1 hộ gia đình</span>
-            </div>
-            <div
-                style="box-sizing: border-box; height: 100%; padding: 8px; border: 1px solid #bdbdbd; background-color: #fff; border-radius: 0.375rem;">
-                <div style="padding: 8px; box-sizing: border-box;">
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-                        <div>
-                            <div style="margin-bottom: 20px;">
-                                <h3 style="color: #E91E63; font-weight: bold; font-size: 25px;">Nhập các thông số
-                                </h3>
+        <div style="max-width: 1140px; margin-left: auto; margin-right: auto; padding-left: 16px; padding-right: 16px;">
+            <h3
+                style="font-size: 3rem; font-weight: bold; color: #134197; padding: 20px; margin-bottom: 30px; position: relative; display: flex; align-items: center; justify-content: center;">
+                Công cụ tính tiền điện</h3>
+            <div style="background-color: #fff; border: 1px solid #ccc; padding: 12px; border-radius: 0.375rem;">
+                <div style="margin-bottom: 16px;">
+                    <span style="font-size: 2rem;">Tính tiền điện sinh hoạt cho 1 hộ gia đình</span>
+                </div>
+                <div
+                    style="box-sizing: border-box; height: 100%; padding: 8px; border: 1px solid #bdbdbd; background-color: #fff; border-radius: 0.375rem;">
+                    <div style="padding: 8px; box-sizing: border-box;">
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                            <div>
+                                <div style="margin-bottom: 20px;">
+                                    <h3 style="color: #E91E63; font-weight: bold; font-size: 25px;">Nhập các thông số
+                                    </h3>
+                                </div>
+                                <div style="font-size: 20px; margin-bottom: 27px;">Từ ngày - đến ngày</div>
+                                <div style="font-size: 20px; margin-bottom: 27px;">Tổng điện năng tiêu thụ (kWh)</div>
+
                             </div>
-                            <div style="font-size: 20px; margin-bottom: 27px;">Từ ngày - đến ngày</div>
-                            <div style="font-size: 20px; margin-bottom: 27px;">Tổng điện năng tiêu thụ (kWh)</div>
-                          
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
-                            <div style="margin-bottom: 16px;">
-                                <div style="display: flex; gap: 16px;">
-                                    <input type="date" id="startDate" name="startDate" style="font-size: 17px; border: 1px solid #ccc; padding: 8px; border-radius: 0.375rem; width: 100%; margin-top: 60px; margin-bottom: 16px;">
-                                    <input type="date" id="endDate" name="endDate" style=" font-size: 17px; border: 1px solid #ccc; padding: 8px; border-radius: 0.375rem; width: 100%; margin-top: 60px; margin-bottom: 16px;">
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                                <div style="margin-bottom: 16px;">
+                                    <div style="display: flex; gap: 16px;">
+                                        <input type="date" id="startDate" name="startDate" style="font-size: 17px; border: 1px solid #ccc; padding: 8px; border-radius: 0.375rem; width: 100%; margin-top: 60px; margin-bottom: 16px;">
+                                        <input type="date" id="endDate" name="endDate" style=" font-size: 17px; border: 1px solid #ccc; padding: 8px; border-radius: 0.375rem; width: 100%; margin-top: 60px; margin-bottom: 16px;">
+                                    </div>
+                                    <div style="display: flex; align-items: center;">
+                                        <input type="number" 
+                                               id="totalConsumedEnergy" 
+                                               name="totalConsumedEnergy" 
+                                               min="0" 
+                                               value="0" 
+                                               style="font-size: 17px; border: 1px solid #ccc; border-radius: 0.375rem; padding: 8px; width: 100%; margin-bottom: 16px;"
+                                               oninput="checkInput1(this)">
+                                        <div id="errorMessage1" style="color: red; margin-left: 10px;"></div>
+                                    </div>
+
+                                    <div style="margin-top: 16px;">
+                                        <button id="calculateBtn"
+                                                style="background-color: #134197; color: #fff; padding: 8px; border-radius: 0.375rem; width: 100%; font-size: 1.25rem; cursor: pointer;">
+                                            <i class="fa fa-calculator" style="margin-right: 8px;"></i>
+                                            Tính toán
+                                        </button>
+                                    </div>
                                 </div>
-                                <div style="display: flex; align-items: center;">
-                                    <input type="number" 
-                                           id="totalConsumedEnergy" 
-                                           name="totalConsumedEnergy" 
-                                           min="0" 
-                                           value="0" 
-                                           style="font-size: 17px; border: 1px solid #ccc; border-radius: 0.375rem; padding: 8px; width: 100%; margin-bottom: 16px;"
-                                           oninput="checkInput1(this)">
-                                    <div id="errorMessage1" style="color: red; margin-left: 10px;"></div>
-                                </div>
-                               
-                                <div style="margin-top: 16px;">
-                                    <button id="calculateBtn"
-                                        style="background-color: #134197; color: #fff; padding: 8px; border-radius: 0.375rem; width: 100%; font-size: 1.25rem; cursor: pointer;">
-                                        <i class="fa fa-calculator" style="margin-right: 8px;"></i>
-                                        Tính toán
-                                    </button>
-                                </div>
+
                             </div>
-                            
+                        </div>
+
+                    </div>
+
+                    <div style="width: 80%;">
+                        <h3 style="color: #E91E63; font-weight: bold; font-size: 25px; margin-bottom: 20px;">Kết quả</h3>
+                        <div style="border: 1px solid #ccc; " id="tableContainer" >
+                            <table style="width: 100%; border-collapse: collapse; ">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;"> BẬC THANG</th>
+                                        <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">ĐƠN GIÁ
+                                            (đồng/kWh)</th>
+                                        <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">SẢN LƯỢNG (kWh)
+                                        </th>
+                                        <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">THÀNH TIỀN (đồng)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    
-                </div>
 
-                <div style="width: 80%;">
-                    <h3 style="color: #E91E63; font-weight: bold; font-size: 25px; margin-bottom: 20px;">Kết quả</h3>
-                    <div style="border: 1px solid #ccc; " id="tableContainer" >
-                        <table style="width: 100%; border-collapse: collapse; ">
-                            <thead>
-                                <tr>
-                                    <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;"> BẬC THANG</th>
-                                    <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">ĐƠN GIÁ
-                                        (đồng/kWh)</th>
-                                    <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">SẢN LƯỢNG (kWh)
-                                    </th>
-                                    <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">THÀNH TIỀN (đồng)
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
-                                </tr>
-                               
-                            </tbody>
-                        </table>
+                    <!-- Ket qua -->
+                    <div style="margin-top: 24px; width: 60%;">
+                        <h3 style="color: #E91E63; font-weight: bold; font-size: 25px; margin-bottom: 30px;">Thành tiền</h3>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 20px; font-weight: bold; margin-bottom: 20px;">
+                            <p>Tiền điện chưa thuế</p>
+                            <input id="tien1" type="text" readonly
+                                   style="border: none; border-bottom: 1px solid #ccc; padding: 1px; text-align: right; font-size: 20px">
+                            <p>Thuế GTGT tiền điện ( <span id="taxValue"></span> )</p>
+
+                            <input id="tien2" type="text" readonly
+                                   style="border: none; border-bottom: 1px solid #ccc; padding: 1px; text-align: right; font-size: 20px">
+                            <p>Tổng cộng tiền thanh toán (đồng)</p>
+                            <input id="tongTien" type="text" readonly
+                                   style="border: none; border-bottom: 1px solid #ccc; padding: 1px; text-align: right; font-size: 20px">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Ket qua -->
-                <div style="margin-top: 24px; width: 60%;">
-                    <h3 style="color: #E91E63; font-weight: bold; font-size: 25px; margin-bottom: 30px;">Thành tiền</h3>
-                    <div
-                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 20px; font-weight: bold; margin-bottom: 20px;">
-                        <p>Tiền điện chưa thuế</p>
-                        <input id="tien1" type="text" readonly
-                            style="border: none; border-bottom: 1px solid #ccc; padding: 1px; text-align: right; font-size: 20px">
-                        <p>Thuế GTGT tiền điện ( <span id="taxValue"></span> )</p>
-                        
-                        <input id="tien2" type="text" readonly
-                            style="border: none; border-bottom: 1px solid #ccc; padding: 1px; text-align: right; font-size: 20px">
-                        <p>Tổng cộng tiền thanh toán (đồng)</p>
-                        <input id="tongTien" type="text" readonly
-                            style="border: none; border-bottom: 1px solid #ccc; padding: 1px; text-align: right; font-size: 20px">
-                    </div>
-                </div>
+
             </div>
-
-            
         </div>
-    </div>
-   <script>
-       let thue=0;
-    // Fetch tax data
-    fetch('/BaiCoNgoc/getTaxGTGT')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('taxValue').innerText = data + '%';
-            thue = data
-        })
-        .catch(error => {
-            console.error('Error fetching tax data:', error);
-            document.getElementById('taxValue').innerText = 'Không xác định';
-        });
+        <script>
+            if (location.pathname.substr(-5) === '.html') {
+                var newURL = location.pathname.slice(0, -5);
+                window.history.replaceState({}, document.title, newURL);
+            }
+            let thue = 0;
+            // Fetch tax data
+            fetch('/BaiCoNgoc/getTaxGTGT')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('taxValue').innerText = data + '%';
+                        thue = data
+                    })
+                    .catch(error => {
+                        console.error('Error fetching tax data:', error);
+                        document.getElementById('taxValue').innerText = 'Không xác định';
+                    });
 
-    async function fetchElectricityData() {
-        try {
-            const response = await fetch('/BaiCoNgoc/getData');
-            const rawData = await response.text();
+            async function fetchElectricityData() {
+                try {
+                    const response = await fetch('/BaiCoNgoc/getData');
+                    const rawData = await response.text();
 
-            console.log("Raw Data from Server:", rawData);
+                    console.log("Raw Data from Server:", rawData);
 
-            const parsedData = JSON.parse(rawData);
-            console.log("Parsed Data:", parsedData);
+                    const parsedData = JSON.parse(rawData);
+                    console.log("Parsed Data:", parsedData);
 
-            let tableContent = `
-                <table style="width: 100%; border-collapse: collapse;">
-                    <thead>
-                        <tr>
-                            <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;"> BẬC THANG</th>
-                            <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">ĐƠN GIÁ (đồng/kWh)</th>
-                            <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">SẢN LƯỢNG (kWh)</th>
-                            <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">Thành tiền (đồng)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+                    let tableContent = `
+                     <table style="width: 100%; border-collapse: collapse;">
+                         <thead>
+                             <tr>
+                                 <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;"> BẬC THANG</th>
+                                 <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">ĐƠN GIÁ (đồng/kWh)</th>
+                                 <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">SẢN LƯỢNG (kWh)</th>
+                                 <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">Thành tiền (đồng)</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                 `;
 
-            parsedData.forEach(item => {
-                tableContent += `
-                    <tr>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.bacThang}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.donGia}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.sanLuong}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
-                    </tr>
-                `;
-            });
+                    parsedData.forEach(item => {
+                        tableContent += `
+                         <tr>
+                             <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.bacThang}</td>
+                             <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.donGia}</td>
+                             <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.sanLuong}</td>
+                             <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;"></td>
+                         </tr>
+                     `;
+                    });
 
-            tableContent += `</tbody></table>`;
-            document.getElementById('tableContainer').innerHTML = tableContent;
+                    tableContent += `</tbody></table>`;
+                    document.getElementById('tableContainer').innerHTML = tableContent;
 
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            alert('Lỗi khi lấy dữ liệu từ máy chủ.');
-        }
-    }
-
-    fetchElectricityData();
-
-    function setEndDateLimit() {
-        let startDate = new Date(document.getElementById('startDate').value);
-        let endDateInput = document.getElementById('endDate');
-        let endDate = new Date(endDateInput.value);
-
-        let currentDate = new Date();
-        let currentYear = currentDate.getFullYear();
-        let currentMonth = currentDate.getMonth();
-
-        let endYear = currentYear;
-        let endMonth = currentMonth - 1;
-
-        if (currentMonth === 0) {
-            endMonth = 11;
-            endYear--;
-        }
-
-        let startYear = currentYear;
-        let startMonth = currentMonth - 2;
-
-        if (currentMonth === 0) {
-            startMonth = 10;
-            startYear--;
-        } else if (currentMonth === 1) {
-            startMonth = 11;
-            startYear--;
-        }
-
-        let lastDayOfEndMonth = new Date(endYear, endMonth + 1, 0).getDate();
-        let lastDayOfStartMonth = new Date(startYear, startMonth + 1, 0).getDate();
-
-        endDateInput.min = `${endYear}-${String(endMonth + 1).padStart(2, '0')}-01`;
-        endDateInput.max = `${endYear}-${String(endMonth + 1).padStart(2, '0')}-${lastDayOfEndMonth}`;
-
-        document.getElementById('startDate').min = `${startYear}-${String(startMonth + 1).padStart(2, '0')}-01`;
-        document.getElementById('startDate').max = `${startYear}-${String(startMonth + 1).padStart(2, '0')}-${lastDayOfStartMonth}`;
-
-        document.getElementById('startDate').value = `${startYear}-${String(startMonth + 1).padStart(2, '0')}-01`;
-        document.getElementById('endDate').value = `${endYear}-${String(endMonth + 1).padStart(2, '0')}-01`;
-
-        if (endDate > new Date(endDateInput.max)) {
-            endDateInput.value = endDateInput.max;
-        } else if (endDate < new Date(endDateInput.min)) {
-            endDateInput.value = endDateInput.min;
-        }
-    }
-
-    document.getElementById('calculateBtn').addEventListener('click', async function() {
-    try {
-            document.getElementById('tableContainer').innerHTML = '';
-            const response = await fetch('/BaiCoNgoc/getData');
-            const rawData = await response.text();
-
-            console.log("Raw Data from Server:", rawData);
-
-            const parsedData = JSON.parse(rawData);
-            console.log("Parsed Data:", parsedData);
-
-            let startDate = new Date(document.getElementById('startDate').value);
-            let endDate = new Date(document.getElementById('endDate').value);
-
-            let timeDifference = endDate.getTime() - startDate.getTime();
-            let daysDifference = timeDifference / (1000 * 3600 * 24);
-            daysDifference+=1;
-
-            if (isNaN(daysDifference)) {
-                daysDifference = 0;
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    alert('Lỗi khi lấy dữ liệu từ máy chủ.');
+                }
             }
 
-            let currentYear = startDate.getFullYear();
-            let currentMonth = startDate.getMonth();
-            let daysInStartMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            fetchElectricityData();
 
-            let totalConsumedEnergy = parseInt(document.getElementById('totalConsumedEnergy').value, 10);
+            function setEndDateLimit() {
+                let startDate = new Date(document.getElementById('startDate').value);
+                let endDateInput = document.getElementById('endDate');
+                let endDate = new Date(endDateInput.value);
 
-           
-            console.log("Tổng điện năng:", totalConsumedEnergy);
-            console.log("Số ngày của tháng startDate:", daysInStartMonth);
-            console.log("Số ngày giữa startDate và endDate:", daysDifference);
-            
-            let tableContent = `
-                <table style="width: 100%; border-collapse: collapse;">
-                    <thead>
-                        <tr>
-                            <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;"> BẬC THANG</th>
-                            <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">ĐƠN GIÁ (đồng/kWh)</th>
-                            <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">SẢN LƯỢNG (kWh)</th>
-                            <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">Thành tiền (đồng)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            let tien1=0;
-            let stopLoop = false;
-            parsedData.forEach(item => {
-                if (stopLoop || totalConsumedEnergy==0) {
-                    return; // Dừng vòng lặp nếu stopLoop là true
+                let currentDate = new Date();
+                let currentYear = currentDate.getFullYear();
+                let currentMonth = currentDate.getMonth();
+
+                let endYear = currentYear;
+                let endMonth = currentMonth - 1;
+
+                if (currentMonth === 0) {
+                    endMonth = 11;
+                    endYear--;
                 }
-                let sanLuongMoi = Math.round((item.sanLuong / daysInStartMonth) *  daysDifference );
-                let sl = sanLuongMoi;
-                if(totalConsumedEnergy<sanLuongMoi || item.sanLuong==0 ) sl = totalConsumedEnergy
-                
-                let thanhTien = item.donGia * sl ;
-                tien1+=thanhTien;
-                totalConsumedEnergy-=sanLuongMoi;
-                
-               
-                console.log("thanh tien:", totalConsumedEnergy);
-                console.log("Sanluongmoi:", sanLuongMoi);
-                tableContent += `
-                    <tr>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.bacThang}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.donGia}</td>
+
+                let startYear = currentYear;
+                let startMonth = currentMonth - 2;
+
+                if (currentMonth === 0) {
+                    startMonth = 10;
+                    startYear--;
+                } else if (currentMonth === 1) {
+                    startMonth = 11;
+                    startYear--;
+                }
+
+                let lastDayOfEndMonth = new Date(endYear, endMonth + 1, 0).getDate();
+                let lastDayOfStartMonth = new Date(startYear, startMonth + 1, 0).getDate();
+
+                endDateInput.min = `${endYear}-${String(endMonth + 1).padStart(2, '0')}-01`;
+                endDateInput.max = `${endYear}-${String(endMonth + 1).padStart(2, '0')}-${lastDayOfEndMonth}`;
+
+                document.getElementById('startDate').min = `${startYear}-${String(startMonth + 1).padStart(2, '0')}-01`;
+                document.getElementById('startDate').max = `${startYear}-${String(startMonth + 1).padStart(2, '0')}-${lastDayOfStartMonth}`;
+
+                document.getElementById('startDate').value = `${startYear}-${String(startMonth + 1).padStart(2, '0')}-01`;
+                document.getElementById('endDate').value = `${endYear}-${String(endMonth + 1).padStart(2, '0')}-01`;
+
+                if (endDate > new Date(endDateInput.max)) {
+                    endDateInput.value = endDateInput.max;
+                } else if (endDate < new Date(endDateInput.min)) {
+                    endDateInput.value = endDateInput.min;
+                }
+            }
+
+            document.getElementById('calculateBtn').addEventListener('click', async function () {
+                try {
+                    document.getElementById('tableContainer').innerHTML = '';
+                    const response = await fetch('/BaiCoNgoc/getData');
+                    const rawData = await response.text();
+
+                    console.log("Raw Data from Server:", rawData);
+
+                    const parsedData = JSON.parse(rawData);
+                    console.log("Parsed Data:", parsedData);
+
+                    let startDate = new Date(document.getElementById('startDate').value);
+                    let endDate = new Date(document.getElementById('endDate').value);
+
+                    let timeDifference = endDate.getTime() - startDate.getTime();
+                    let daysDifference = timeDifference / (1000 * 3600 * 24);
+                    daysDifference += 1;
+
+                    if (isNaN(daysDifference)) {
+                        daysDifference = 0;
+                    }
+
+                    let currentYear = startDate.getFullYear();
+                    let currentMonth = startDate.getMonth();
+                    let daysInStartMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+                    let totalConsumedEnergy = parseInt(document.getElementById('totalConsumedEnergy').value, 10);
+
+
+                    console.log("Tổng điện năng:", totalConsumedEnergy);
+                    console.log("Số ngày của tháng startDate:", daysInStartMonth);
+                    console.log("Số ngày giữa startDate và endDate:", daysDifference);
+
+                    let tableContent = `
+                     <table style="width: 100%; border-collapse: collapse;">
+                         <thead>
+                             <tr>
+                                 <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;"> BẬC THANG</th>
+                                 <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">ĐƠN GIÁ (đồng/kWh)</th>
+                                 <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">SẢN LƯỢNG (kWh)</th>
+                                 <th style="font-size: 18px; border: 1px solid #ccc; padding: 8px;">Thành tiền (đồng)</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                 `;
+                    let tien1 = 0;
+                    let stopLoop = false;
+                    parsedData.forEach(item => {
+                        if (stopLoop || totalConsumedEnergy == 0) {
+                            return; // Dừng vòng lặp nếu stopLoop là true
+                        }
+                        let sanLuongMoi = Math.round((item.sanLuong / daysInStartMonth) * daysDifference);
+                        let sl = sanLuongMoi;
+                        if (totalConsumedEnergy < sanLuongMoi || item.sanLuong == 0)
+                            sl = totalConsumedEnergy
+
+                        let thanhTien = item.donGia * sl;
+                        tien1 += thanhTien;
+                        totalConsumedEnergy -= sanLuongMoi;
+
+
+                        console.log("thanh tien:", totalConsumedEnergy);
+                        console.log("Sanluongmoi:", sanLuongMoi);
+                        tableContent += `
+                         <tr>
+                             <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.bacThang}</td>
+                             <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${item.donGia}</td>
                     
-                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${sl}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${thanhTien}</td>
-                    </tr>
-                `;
-             
-                if (totalConsumedEnergy < 1) {
-                    stopLoop = true; // Đặt stopLoop là true để dừng vòng lặp
+                             <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${sl}</td>
+                             <td style="border: 1px solid #ccc; padding: 8px; font-size: 18px;">${thanhTien}</td>
+                         </tr>
+                     `;
+
+                        if (totalConsumedEnergy < 1) {
+                            stopLoop = true; // Đặt stopLoop là true để dừng vòng lặp
+                        }
+                    });
+
+                    tableContent += `</tbody></table>`;
+                    document.getElementById('tableContainer').innerHTML = tableContent;
+
+                    let tax = parseFloat(document.getElementById('taxValue').innerText.replace('%', ''));
+                    // Lấy giá trị thuế GTGT từ span và chuyển đổi về dạng số
+                    console.log("tax:", tax);
+                    document.getElementById('tien1').value = tien1;
+                    let tien2 = Math.round(tien1 * tax / 100);
+                    document.getElementById('tien2').value = tien2;
+                    let tongTien = tien1 + tien2;
+                    document.getElementById('tongTien').value = tongTien;
+
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    alert('Lỗi khi lấy dữ liệu từ máy chủ.');
                 }
             });
 
-            tableContent += `</tbody></table>`;
-            document.getElementById('tableContainer').innerHTML = tableContent;
-            
-            let tax = parseFloat(document.getElementById('taxValue').innerText.replace('%', ''));
-            // Lấy giá trị thuế GTGT từ span và chuyển đổi về dạng số
-            console.log("tax:", tax);
-            document.getElementById('tien1').value = tien1;
-            let tien2 = Math.round(tien1 * tax / 100);
-            document.getElementById('tien2').value = tien2;
-            let tongTien = tien1 + tien2;
-            document.getElementById('tongTien').value = tongTien;
+            function checkInput1(inputElement) {
+                let value = inputElement.value;
 
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            alert('Lỗi khi lấy dữ liệu từ máy chủ.');
-        }
-    });
+                // Chuyển đổi giá trị thành số
+                let floatValue = parseFloat(value);
 
-   function checkInput1(inputElement) {
-    let value = inputElement.value;
-    
-    // Chuyển đổi giá trị thành số
-    let floatValue = parseFloat(value);
+                // Loại bỏ số thập phân và kiểm tra số nguyên không âm
+                let intValue = Math.floor(floatValue);
 
-    // Loại bỏ số thập phân và kiểm tra số nguyên không âm
-    let intValue = Math.floor(floatValue);
-    
-    if (intValue < 0 || !Number.isInteger(intValue)) {
-        document.getElementById('errorMessage1').innerText = "Vui lòng nhập số nguyên không âm.";
-        inputElement.value = "";
-    } else if (intValue > 99999) {
-        document.getElementById('errorMessage1').innerText = "Không thể nhập quá 99999. Yêu cầu nhập lại.";
-        inputElement.value = "";
-    } else {
-        document.getElementById('errorMessage1').innerText = "";
-        inputElement.value = intValue;
-    }
-}
-
-    
-   
-
-    // Gọi hàm khi trang web được tải
-    window.onload = setEndDateLimit;
-    
-</script>
+                if (intValue < 0 || !Number.isInteger(intValue)) {
+                    document.getElementById('errorMessage1').innerText = "Vui lòng nhập số nguyên không âm.";
+                    inputElement.value = "";
+                } else if (intValue > 99999) {
+                    document.getElementById('errorMessage1').innerText = "Không thể nhập quá 99999. Yêu cầu nhập lại.";
+                    inputElement.value = "";
+                } else {
+                    document.getElementById('errorMessage1').innerText = "";
+                    inputElement.value = intValue;
+                }
+            }
 
 
-</body>
+
+
+            // Gọi hàm khi trang web được tải
+            window.onload = setEndDateLimit;
+
+        </script>
+
+
+    </body>
 
 </html>

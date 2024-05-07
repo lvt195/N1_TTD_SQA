@@ -15,7 +15,7 @@
         <jsp:include page="menu.jsp" />
         
         <div class="dangnhap">
-            <form action="sign-in">
+            <form action="sign-in" method="POST">
                 <div class="form-group">
                         <label style="font-size: 30px ; color: black">Đăng Nhập </label>
                     </div>

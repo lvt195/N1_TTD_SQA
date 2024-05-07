@@ -1,4 +1,3 @@
-
 package Control;
 
 import DAL.districtDAO;
@@ -17,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * @author tuyen
@@ -27,7 +27,7 @@ public class ElecRegistration extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -36,12 +36,12 @@ public class ElecRegistration extends HttpServlet {
         request.getRequestDispatcher("ElecRegistration.jsp").forward(request, response);
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter()) {
             String fullName = request.getParameter("fullName");
             String phone = request.getParameter("phone");
             String gmail = request.getParameter("gmail");
@@ -61,17 +61,18 @@ public class ElecRegistration extends HttpServlet {
             String res = elecRegistration.elecRegistration(fullName, phone, gmail,
                     placeOfResidence, elecAddress, city, district, wards, idCard, dateOfId, placeOfId, phaseNumber, personalDoc, dits, status);
             if (res != null) {
-                out.println("insert success");
+                request.getRequestDispatcher("ElecRegistration.jsp").forward(request, response);
+
             } else {
-                out.println("loi");
+
+                out.println("loi" + res);
             }
         }
-        List<district> listDis = new districtDAO().getAll();
-        request.setAttribute("listDis", listDis);
-        request.getRequestDispatcher("ElecRegistration.jsp").forward(request, response);
+//        List<district> listDis = new districtDAO().getAll();
+//        request.setAttribute("listDis", listDis);
+//        request.getRequestDispatcher("ElecRegistration.jsp").forward(request, response);
     }
 
-   
     @Override
     public String getServletInfo() {
         return "Short description";

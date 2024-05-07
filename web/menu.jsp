@@ -24,8 +24,8 @@
             </div>
             
             <div class="tacvu">
-             <button class="button" onclick = "document.location = 'http://localhost:8080/BaiCoNgoc/dangnhap.jsp'" > Đăng Nhập </button>
-             <button class="button" onclick = "document.location = 'http://localhost:8080/BaiCoNgoc/dangky.jsp'" > Đăng ký </button>
+             <button class="button" onclick = "document.location = 'http://localhost:8080/BaiCoNgoc/sign-in'" > Đăng Nhập </button>
+             <button class="button" onclick = "document.location = 'http://localhost:8080/BaiCoNgoc/sign-up'" > Đăng ký </button>
             </div>
         </div>
         <div class="menu1"> </div>

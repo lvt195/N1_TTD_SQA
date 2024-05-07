@@ -68,15 +68,12 @@ public class HoaDonController extends HttpServlet {
                 jsonObject.put("id_admin", bill.getId_admin());
                 jsonObject.put("vaitro", vaitro);
                 jsonArray.put(jsonObject);
-                
-                
-                
-                
             }
             out.print(jsonArray.toString());
         } catch (SQLException e) {
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+        
     }
 }

@@ -51,7 +51,7 @@
 
         btnOke.addEventListener('click', function() {
             // Chuyển hướng đến trang dangnhap.jsp
-            window.location.href = "dangnhap.jsp";
+            window.location.href = "/BaiCoNgoc/sign-in";
         });
     </script>
 </body>

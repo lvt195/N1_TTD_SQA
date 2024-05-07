@@ -43,6 +43,10 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <script>
+            if (location.pathname.substr(-5) === '.html') {
+                var newURL = location.pathname.slice(0, -5);
+                window.history.replaceState({}, document.title, newURL);
+            }
             // Sử dụng jQuery để tải menu từ server
             $(document).ready(function () {
                 // Lấy vai trò của người dùng từ response JSON khi lấy chi tiết hoá đơn

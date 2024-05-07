@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="DAL.elecRegitrationDAO" %>
 <%@ page import="Model.elecRegistration" %>
@@ -27,14 +27,14 @@
             } else {%>
             <jsp:include page="menuadmin.jsp" />
             <div class="container-fluid" style="padding: 120px 40px 0px 40px" >
-            <h1 class="text-center mb-5">Quản lý đăng ký mua điện tại Hà Nội</h1>
+                <h1 class="text-center" style="padding-bottom: 20px ">Quản lý đăng ký mua điện tại Hà Nội</h1>
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">STT</th>
                         <th scope="col">Họ tên</th>
                         <th scope="col">Số điện thoại</th>
-                        <th scope="col" style="width: 160px">Địa chỉ dùng điện</th>
+                        <th scope="col" >Địa chỉ dùng điện</th>
                         <th scope="col">Quận, huyện</th>
                         <th scope="col">Phường, xã</th>
                         <th scope="col">Căn cước</th>
@@ -56,9 +56,9 @@
                             <td>${elec.phaseNumber}</td>
                             <td>${elec.status}</td>
                             <td>
-                                <a href="UpdateElec?id=${elec.id}" class="btn btn-primary">Update</a>
-                                <a href="deleteRegis?id=${elec.id}" class="btn btn-danger">Xoá</a>
-                                <a href="deleteRegis?id=${elec.id}" class="btn btn-danger">Chi tiết</a>
+                                <a href="UpdateElec?id=${elec.id}" class="btn btn-primary" style="cursor: pointer">Update</a>
+                                <a href="javascript:void(0);" onclick="showmessage(${elec.id})" class="btn btn-danger" style="cursor: pointer">Xoá</a>
+                                <a href="detailElec?id=${elec.id}" class="btn btn-danger" style="cursor: pointer">Chi tiết</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -71,6 +71,15 @@
         </form>
         <% }%>
     </body>
+    <script>
+        function showmessage(id){
+            var option=confirm('Ban có thực sự muốn xoá thông tin khách hàng này không?');
+            console.log(option);
+            if (option===true){
+                window.location.href = 'deleteRegis?id=' + id;
+            } 
+        }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 

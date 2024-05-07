@@ -12,6 +12,18 @@
         <servlet-name>UpdateElec</servlet-name>
         <servlet-class>Control.UpdateElec</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteRegis</servlet-name>
+        <servlet-class>Control.deleteRegis</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>detailElec</servlet-name>
+        <servlet-class>Control.detailElec</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HoaDonController1</servlet-name>
+        <servlet-class>Control.HoaDonController1</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BangGiaDienController</servlet-name>
         <url-pattern>/getData</url-pattern>
@@ -51,5 +63,17 @@
     <servlet-mapping>
         <servlet-name>UpdateElec</servlet-name>
         <url-pattern>/UpdateElec</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteRegis</servlet-name>
+        <url-pattern>/deleteRegis</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>detailElec</servlet-name>
+        <url-pattern>/detailElec</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HoaDonController1</servlet-name>
+        <url-pattern>/bill</url-pattern>
     </servlet-mapping>
 </web-app>

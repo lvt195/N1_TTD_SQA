@@ -1,5 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <!DOCTYPE html>
@@ -103,14 +103,15 @@
                     </td> 
                 </tr>
                 <tr>
+                    <td><h4>Hồ Sơ khách hàng cung cấp:</h4></td>
+                </tr>
+                <tr>
                     <td>Giấy tờ tuỳ thân</td>
                 </tr>
                 <tr>
                     <td>Giấy tờ xác định chủ thể</td>
                 </tr>
-                <tr>
-                    <td><h4>Hồ Sơ khách hàng cung cấp:</h4></td>
-                </tr>
+                
                 <tr>
                     <td>
                         Trạng thái: 

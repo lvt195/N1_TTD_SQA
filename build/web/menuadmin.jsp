@@ -42,7 +42,7 @@
                 <form action="${pageContext.request.contextPath}/bill.html"> <input type="submit" class="button" value="Quản lý hoá đơn"> </form>
                 <form action="${pageContext.request.contextPath}/congcutinhtiendien.html"> <input type="submit" class="button" value="Công cụ tính tiền điện"> </form>
                 <form action="${pageContext.request.contextPath}/ElecRegistration"> <input type="submit" class="button" value="Đăng kí mua điện"> </form>
-                <form action="${pageContext.request.contextPath}/#"> <input type="submit" class="button" value="Duyệt đăng kí mua điện"> </form>
+                <form action="${pageContext.request.contextPath}/ManageElecRegis"> <input type="submit" class="button" value="Quản lí đăng kí mua điện"> </form>
             </div>
         </div>
         </div>

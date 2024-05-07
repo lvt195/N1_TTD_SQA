@@ -29,7 +29,7 @@ public class CapNhatSoDienController extends HttpServlet {
              String name = (String) session.getAttribute("name");
              String pass = (String)session.getAttribute("pass");
 //             System.out.println(name+pass);
-             User admin=(new ElectricBoardDAO()).getUser(name, pass);
+             User admin=(new ElectricBoardDAO()).getUser(name, pass);//
 //             System.out.println(admin.getId());
              int i = Integer.parseInt(request.getParameter("i"));
              int new_number = Integer.parseInt(request.getParameter("new_number"));

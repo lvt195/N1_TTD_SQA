@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Thanh toán tiền điện sinh hoạt của hộ cá nhân</title>
+        <link rel="stylesheet" href="css/menu.css">
         <!-- Bootstrap CSS -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
@@ -13,6 +14,14 @@
         </style>
     </head>
     <body>
+        <!--        <div class="menu">
+                    <div class="tacvu">
+                         EVNHANOI
+                    </div>
+                    <div class="tacvu">
+                         <button class="button" name="back" onclick="history.back()" style="border: none;" > Trang Chủ </button>
+                    </div>
+                </div>-->
         <div id="menuPlaceholder"></div>
 
         <div class="container" style="padding-top: 120px">
@@ -43,6 +52,10 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <script>
+//            if (location.pathname.substr(-5) === '.html') {
+//                var newURL = location.pathname.slice(0, -5);
+//                window.history.replaceState({}, document.title, newURL);
+//            }
             let menu = "menu.jsp";
 
             function parseDate(dateString) {
@@ -70,14 +83,14 @@
 
                     // Kiểm tra và lấy giá trị `vaitro` từ tất cả các hóa đơn
                     const vaitroList = parsedData.map(item => item.vaitro);
-
+                    console.log(vaitroList);
                     // Nếu có ít nhất một hóa đơn có `vaitro` là "admin", gán giá trị cho biến `menu`
                     if (vaitroList.includes("admin")) {
                         menu = "menuadmin.jsp";
                     } else if (vaitroList.includes("user")) {
                         menu = "menuuser.jsp";
                     }
-                    
+
                     let tableContent = '';
 
                     if (parsedData.length === 0) {
